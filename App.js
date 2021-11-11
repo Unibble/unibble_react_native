@@ -12,7 +12,7 @@ function App() {
         <Stack.Screen
           name="MAIN"
           component={FeedScreen}
-          options={{ title: '피드' }}
+          options={{ title: '피드', headerShown: false }}
         />
         <Stack.Screen
           name="DETAIL"

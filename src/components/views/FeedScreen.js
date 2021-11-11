@@ -3,7 +3,16 @@ import React, { Component } from 'react';
 import { Row, Col } from '@ant-design/react-native';
 import { View, StyleSheet, Button, Image } from 'react-native';
 import Text from 'components/common/Text';
-import alertImage from 'assets/images/alertImage.png';
+import Icon from 'react-native-vector-icons/Ionicons';
+// import {
+//   Container,
+//   Content,
+//   Thumbnail,
+//   Header,
+//   Left,
+//   Right,
+//   Body,
+// } from 'native-base';
 
 const styles = StyleSheet.create({
   bigBlue: {
@@ -14,6 +23,17 @@ const styles = StyleSheet.create({
   red: {
     color: 'red',
   },
+  header: {
+    // flex: 1,
+    // flexDirection: 'column',
+    backgroundColor: 'white',
+    height: '40%',
+  },
+  leftSection: {
+    flex: 1,
+    alignItems: 'flex-end',
+    backgroundColor: 'red',
+  },
   white: {
     backgroundColor: 'white',
   },
@@ -23,12 +43,20 @@ export default class FeedScreen extends Component {
   render() {
     return (
       <View>
-        <View style={styles.white}>
-          <Image source={alertImage} onPress={() => this.goMainScreen()} />
-          {/* <Button
-            onPress
-            title="Go Detail Screen"
-          ></Button> */}
+        <View style={styles.header}>
+          <View style={styles.leftSection}>
+            <Icon
+              name="ios-notifications"
+              size={30}
+              onPress={() => this.goMainScreen()}
+            />
+          </View>
+
+          <Icon
+            name="ios-notifications"
+            size={30}
+            onPress={() => this.goMainScreen()}
+          />
         </View>
         <View>
           <Text fontSize={30} fontFamily={'NotoSansKR-Bold'}>
