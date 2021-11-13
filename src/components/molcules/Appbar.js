@@ -18,6 +18,9 @@ import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ProfileImage from 'assets/images/profileImage.png';
 import RiceImage from 'assets/images/riceImage.png';
+import StudyImage from 'assets/images/studyImage.png';
+import BeerImage from 'assets/images/beerImage.png';
+import GameImage from 'assets/images/gameImage.png';
 import { useNavigation } from '@react-navigation/native';
 import styled from 'styled-components/native';
 
@@ -25,6 +28,9 @@ function AppBar(props) {
   const navigation = useNavigation();
   const [isAll, setIsAll] = useState(true);
   const [isRiceCategory, setIsRiceCategory] = useState(false);
+  const [isBeerCategory, setIsBeerCategory] = useState(false);
+  const [isStudyCategory, setIsStudyCategory] = useState(false);
+  const [isGameCategory, setIsGameCategory] = useState(false);
 
   const allButtonClick = () => {
     setIsAll(!isAll);
@@ -34,9 +40,16 @@ function AppBar(props) {
     setIsRiceCategory(!isRiceCategory);
   };
 
-  const goMainScreen = () => {
-    props.navigation.navigate('DETAIL');
+  const BeerCategoryButtonClick = () => {
+    setIsBeerCategory(!isBeerCategory);
   };
+  const StudyCategoryButtonClick = () => {
+    setIsStudyCategory(!isStudyCategory);
+  };
+  const GameCategoryButtonClick = () => {
+    setIsGameCategory(!isGameCategory);
+  };
+
   return (
     <>
       <StatusBar backgroundColor="#3700B3" barStyle="light-content" />
@@ -80,10 +93,11 @@ function AppBar(props) {
           <HStack bg="none">
             <ScrollView
               horizontal={true}
-              showsHorizontalScrollIndicator={true}
+              showsHorizontalScrollIndicator={false}
               onMomentumScrollEnd={() => {
                 console.log('Scrolling is End');
               }}
+              style={{ paddingBottom: 20 }}
             >
               <View style={styles.viewStyle1}>
                 <Button
@@ -95,9 +109,8 @@ function AppBar(props) {
                     },
                   ]}
                   title=""
-                >
-                  <Text style={styles.text}></Text>
-                </Button>
+                ></Button>
+                <Text style={styles.text}>전체</Text>
               </View>
               <View style={styles.viewStyle2}>
                 <Button
@@ -114,9 +127,74 @@ function AppBar(props) {
                 >
                   <Image size={34} source={RiceImage} alt="rice-image" />
                 </Button>
+                <Text style={styles.text}>밥</Text>
               </View>
               <View style={styles.viewStyle3}>
-                <Text style={styles.textStyle}>Screen 3</Text>
+                <Button
+                  onPress={BeerCategoryButtonClick}
+                  style={[
+                    styles.button,
+                    {
+                      backgroundColor: `${
+                        isBeerCategory ? '#B66DFF' : 'white'
+                      }`,
+                    },
+                  ]}
+                  title=""
+                >
+                  <Image size={34} source={BeerImage} alt="beer-image" />
+                </Button>
+                <Text style={styles.text}>술</Text>
+              </View>
+              <View style={styles.viewStyle4}>
+                <Button
+                  onPress={StudyCategoryButtonClick}
+                  style={[
+                    styles.button,
+                    {
+                      backgroundColor: `${
+                        isStudyCategory ? '#B66DFF' : 'white'
+                      }`,
+                    },
+                  ]}
+                  title=""
+                >
+                  <Image size={34} source={StudyImage} alt="study-image" />
+                </Button>
+                <Text style={styles.text}>스터디</Text>
+              </View>
+              <View style={styles.viewStyle5}>
+                <Button
+                  onPress={GameCategoryButtonClick}
+                  style={[
+                    styles.button,
+                    {
+                      backgroundColor: `${
+                        isGameCategory ? '#B66DFF' : 'white'
+                      }`,
+                    },
+                  ]}
+                  title=""
+                >
+                  <Image size={34} source={GameImage} alt="game-image" />
+                </Button>
+                <Text style={styles.text}>게임</Text>
+              </View>
+              <View style={styles.viewStyle3}>
+                <Button
+                  onPress={RiceCategoryButtonClick}
+                  style={[
+                    styles.button,
+                    {
+                      backgroundColor: `${
+                        isRiceCategory ? '#B66DFF' : 'white'
+                      }`,
+                    },
+                  ]}
+                  title=""
+                >
+                  <Image size={34} source={RiceImage} alt="rice-image" />
+                </Button>
               </View>
             </ScrollView>
           </HStack>
@@ -157,13 +235,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 70,
     height: 70,
-    marginBottom: 30,
+    marginBottom: 10,
     borderRadius: 35,
     shadowColor: 'rgba(0,0,0,0.2)',
     shadowOpacity: 1,
     shadowOffset: { height: 2, width: 2 },
     shadowRadius: 2,
-    marginRight: 10,
+    marginRight: 16,
     // margin
 
     ...Platform.select({
@@ -182,9 +260,10 @@ const styles = StyleSheet.create({
   },
 
   text: {
-    fontSize: 30,
+    fontSize: 15,
     textAlign: 'center',
-    color: 'white',
+    color: '#323232',
+    marginLeft: -10,
   },
 });
 
