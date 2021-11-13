@@ -1,72 +1,83 @@
 //MainScreen.js
 import React, { Component } from 'react';
-import { Row, Col } from '@ant-design/react-native';
-import { View, StyleSheet, Button, Image } from 'react-native';
+// import { View, StyleSheet, SafeAreaView, Image, FlatList } from 'react-native';
 import Text from 'components/common/Text';
+// import Card from 'components/molcules/Card';
+import profileImage from 'assets/images/profileImage.png';
+import AppBar from 'components/molcules/Appbar.js';
 import Icon from 'react-native-vector-icons/Ionicons';
-// import {
-//   Container,
-//   Content,
-//   Thumbnail,
-//   Header,
-//   Left,
-//   Right,
-//   Body,
-// } from 'native-base';
 
-const styles = StyleSheet.create({
-  bigBlue: {
-    color: 'blue',
-    fontWeight: 'bold',
-    fontSize: 30,
-  },
-  red: {
-    color: 'red',
-  },
-  header: {
-    // flex: 1,
-    // flexDirection: 'column',
-    backgroundColor: 'white',
-    height: '40%',
-  },
-  leftSection: {
-    flex: 1,
-    alignItems: 'flex-end',
-    backgroundColor: 'red',
-  },
-  white: {
-    backgroundColor: 'white',
-  },
-});
+import {
+  Container,
+  Header,
+  Left,
+  Button,
+  IconButton,
+  NativeBaseProvider,
+  Badge,
+  Center,
+} from 'native-base';
 
-export default class FeedScreen extends Component {
-  render() {
-    return (
-      <View>
-        <View style={styles.header}>
-          <View style={styles.leftSection}>
-            <Icon
-              name="ios-notifications"
-              size={30}
-              onPress={() => this.goMainScreen()}
-            />
-          </View>
+function FeedScreen({ navigation }) {
+  return (
+    <>
+      <AppBar navigation={navigation} />
+    </>
+    // </Container>
+    // </View>
+    // <NativeBaseProvider>
+    //   <Container>
+    //     <Header>
+    //       <Left>
+    //         <Button transparent>
+    //           <Icon name="menu" />
+    //         </Button>
+    //       </Left>
+    //     </Header>
+    //   </Container>
+    // </NativeBaseProvider>
+    // <View>
+    //   <View style={styles.container}>
+    //     <View style={styles.HeaderContainer}>
+    //       <Image style={styles.HeaderText} source={profileImage} />
+    //       <Text style={styles.HeaderText}>Selfly</Text>
+    //     </View>
+    //     <View>
+    //       <Icon
+    //         name="ios-notifications"
+    //         size={30}
+    //         onPress={() => this.goMainScreen()}
+    //       />
+    //       <Text
+    //         fontSize={30}
+    //         fontFamily={'NotoSansKR-Bold'}
+    //         style={styles.title}
+    //       >
+    //         버블 모아보기
+    //       </Text>
+    //     </View>
+    //     <View style={styles.middleSection}></View>
 
-          <Icon
-            name="ios-notifications"
-            size={30}
-            onPress={() => this.goMainScreen()}
-          />
-        </View>
-        <View>
-          <Text fontSize={30} fontFamily={'NotoSansKR-Bold'}>
-            버블 모아보기
-          </Text>
-        </View>
-      </View>
-    );
-  }
-  goMainScreen() {
-    this.props.navigation.navigate('DETAIL');
-  }
+    //     <View style={styles.content}>
+    //       <FlatList
+    //         keyExtractor={(item) => item.toString()}
+    //         data={arr}
+    //         renderItem={({ item }) => <Card num={item} />}
+    //       />
+    //     </View>
+    //   </View>
+    // </View>
+  );
+  // }
+  // goMainScreen() {
+  //   this.props.navigation.navigate('DETAIL');
+  // }
 }
+
+export default () => {
+  return (
+    <NativeBaseProvider>
+      <FeedScreen />
+    </NativeBaseProvider>
+  );
+};
