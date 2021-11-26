@@ -7,6 +7,7 @@ import profileImage from 'assets/images/profileImage.png';
 import AppBar from 'components/molcules/Appbar.js';
 import Icon from 'react-native-vector-icons/Ionicons';
 import FloatingButton from 'components/molcules/FloatingButton.js';
+import { useNavigation } from '@react-navigation/native';
 
 import {
   NativeBaseProvider,
@@ -25,6 +26,8 @@ import {
 } from 'native-base';
 
 function FeedScreen({ navigation }) {
+  const navigations = useNavigation();
+
   const data = [
     {
       id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
@@ -249,32 +252,37 @@ function FeedScreen({ navigation }) {
                           {item.joinNum}/{item.totalNum}명
                         </Text>
                       </Badge>
-                      <Badge
-                        alignSelf="center"
-                        varient={'outline'}
-                        opacity={`${item.status === '모집마감' ? 0.2 : 1}`}
-                        style={{
-                          marginTop: 47,
-                          backgroundColor: `${
-                            item.status === '참여하기' ? '#323232' : 'white'
-                          }`,
-                          borderColor: `${
-                            item.status === '참여하기' ? 'white' : '#323232'
-                          }`,
-                          borderRadius: 18,
-                        }}
+                      <Button
+                        onPress={() => navigations.navigate('DETAIL_BUBBLE')}
+                        style={{ backgroundColor: 'transparent' }}
                       >
-                        <Text
+                        <Badge
+                          alignSelf="center"
+                          varient={'outline'}
+                          opacity={`${item.status === '모집마감' ? 0.2 : 1}`}
                           style={{
-                            color: `${
+                            marginTop: 47,
+                            backgroundColor: `${
+                              item.status === '참여하기' ? '#323232' : 'white'
+                            }`,
+                            borderColor: `${
                               item.status === '참여하기' ? 'white' : '#323232'
                             }`,
-                            fontSize: 12,
+                            borderRadius: 18,
                           }}
                         >
-                          {item.status}
-                        </Text>
-                      </Badge>
+                          <Text
+                            style={{
+                              color: `${
+                                item.status === '참여하기' ? 'white' : '#323232'
+                              }`,
+                              fontSize: 12,
+                            }}
+                          >
+                            {item.status}
+                          </Text>
+                        </Badge>
+                      </Button>
                     </VStack>
                   </HStack>
                 </Box>
