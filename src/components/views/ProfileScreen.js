@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
 import NewProfileImage from 'assets/images/newProfileImage.png';
 import ProfileStatusBar from 'components/molcules/ProfileStatusBar';
+import { useNavigation } from '@react-navigation/native';
 
 import {
   VStack,
@@ -23,6 +24,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default function ProfileScreen() {
+  const navigation = useNavigation();
   return (
     <NativeBaseProvider>
       <ProfileStatusBar />
@@ -97,6 +99,11 @@ export default function ProfileScreen() {
                 <HStack>
                   <Text style={styles.tabMenuTitle}>약속한 버블 </Text>
                   <IconButton
+                    onPress={() =>
+                      navigation.navigate('PROFILE_TAB_DETAIL', {
+                        title: '약속한 버블',
+                      })
+                    }
                     style={{
                       borderRadius: 20,
                       marginTop: -7,
