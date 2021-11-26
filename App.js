@@ -22,6 +22,7 @@ function App() {
           screenOptions={{
             headerStyle: {
               backgroundColor: 'white',
+              borderBottomColor: 'tansparent',
             },
             headerTitleStyle: {
               textAlign: 'left',
