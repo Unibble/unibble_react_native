@@ -7,12 +7,21 @@ import {
   NativeBaseProvider,
   Center,
   Container,
+  Badge,
+  HStack,
 } from 'native-base';
 import { StyleSheet, View, Text } from 'react-native';
 
 function CreateBubbleScreen() {
   const [bubbleName, setBubbleName] = React.useState({});
   const [errors, setErrors] = React.useState({});
+  const menus = ['Menu1', 'Menu2', 'Menu3', 'Menu4'];
+  const menuList = menus.map((menu) => (
+    <Badge style={styles.badge} alignSelf="center" varient={'outline'}>
+      <Text style={{ color: '#7371FF', fontSize: 16 }}>{menu}</Text>
+    </Badge>
+  ));
+
   const validate = () => {
     if (bubbleName.name === undefined) {
       setErrors({
@@ -152,6 +161,43 @@ function CreateBubbleScreen() {
           </FormControl.HelperText>
         )}
       </FormControl>
+      <FormControl style={{ marginBottom: 20 }}>
+        <FormControl.Label _text={{ bold: true }}>
+          <Text style={styles.defaultText}>관련 유닛을 선택해주세요.</Text>
+        </FormControl.Label>
+        {/* <View>{menuList}</View> */}
+        <HStack>
+          <Badge style={styles.badge} alignSelf="center" varient={'outline'}>
+            <Text style={styles.badgeText}>밥</Text>
+          </Badge>
+          <Badge style={styles.badge} alignSelf="center" varient={'outline'}>
+            <Text style={styles.badgeText}>술</Text>
+          </Badge>
+          <Badge style={styles.badge} alignSelf="center" varient={'outline'}>
+            <Text style={styles.badgeText}>운동</Text>
+          </Badge>
+          <Badge style={styles.badge} alignSelf="center" varient={'outline'}>
+            <Text style={styles.badgeText}>미팅</Text>
+          </Badge>
+          <Badge style={styles.badge} alignSelf="center" varient={'outline'}>
+            <Text style={styles.badgeText}>게임</Text>
+          </Badge>
+        </HStack>
+        <HStack style={{ marginTop: 8 }}>
+          <Badge style={styles.badge} alignSelf="center" varient={'outline'}>
+            <Text style={styles.badgeText}>영화</Text>
+          </Badge>
+          <Badge style={styles.badge} alignSelf="center" varient={'outline'}>
+            <Text style={styles.badgeText}>산책</Text>
+          </Badge>
+          <Badge style={styles.badge} alignSelf="center" varient={'outline'}>
+            <Text style={styles.badgeText}>스터디</Text>
+          </Badge>
+          <Badge style={styles.badge} alignSelf="center" varient={'outline'}>
+            <Text style={styles.badgeText}>기타만남</Text>
+          </Badge>
+        </HStack>
+      </FormControl>
       <Button onPress={onSubmit} mt="5" colorScheme="cyan">
         Submit
       </Button>
@@ -183,5 +229,25 @@ const styles = StyleSheet.create({
     fontFamily: 'Noto Sans KR',
     fontStyle: 'normal',
     fontWeight: '500',
+  },
+  badge: {
+    backgroundColor: 'white',
+    borderColor: '#7371FF',
+    color: '#7371FF',
+    fontFamily: 'Noto Sans KR',
+    borderRadius: 18,
+    paddingLeft: 15,
+    paddingRight: 15,
+    paddingTop: 5,
+    paddingBottom: 5,
+    marginRight: 5,
+    marginLeft: 5,
+  },
+  badgeText: {
+    color: '#7371FF',
+    fontSize: 16,
+    fontWeight: '400',
+    fontFamily: 'Noto Sans KR',
+    lineHeight: 24,
   },
 });
