@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import FeedScreen from 'components/views/FeedScreen';
 import SettingsScreen from 'components/views/SettingsScreen';
 import ProfileScreen from 'components/views/ProfileScreen';
+import CreateBubbleScreen from 'components/views/CreateBubbleScreen';
 import { NativeBaseProvider } from 'native-base';
 import SplashScreen from 'react-native-splash-screen';
 
@@ -41,6 +42,11 @@ function App() {
           <Stack.Screen
             name="PROFILE"
             component={ProfileScreen}
+            options={{ title: '' }}
+          />
+          <Stack.Screen
+            name="CREATE_BUBBLE"
+            component={CreateBubbleScreen}
             options={{ title: '' }}
           />
         </Stack.Navigator>
