@@ -78,6 +78,7 @@ export default function BubbleDetailStatusBar(props) {
 const styles = StyleSheet.create({
   content: {
     paddingLeft: 16,
+    paddingBottom: 7,
   },
 
   profileName: {
