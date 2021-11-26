@@ -4,8 +4,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import FeedScreen from 'components/views/FeedScreen';
 import SettingsScreen from 'components/views/SettingsScreen';
+import ProfileScreen from 'components/views/ProfileScreen';
 import { NativeBaseProvider } from 'native-base';
 import SplashScreen from 'react-native-splash-screen';
+
 const Stack = createStackNavigator();
 
 function App() {
@@ -18,7 +20,7 @@ function App() {
         <Stack.Navigator
           screenOptions={{
             headerStyle: {
-              backgroundColor: 'transparent',
+              backgroundColor: 'white',
             },
             headerTitleStyle: {
               textAlign: 'left',
@@ -35,6 +37,11 @@ function App() {
             name="DETAIL"
             component={SettingsScreen}
             options={{ title: '설정' }}
+          />
+          <Stack.Screen
+            name="PROFILE"
+            component={ProfileScreen}
+            options={{ title: '' }}
           />
         </Stack.Navigator>
       </NavigationContainer>

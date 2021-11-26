@@ -57,7 +57,16 @@ function AppBar(props) {
       <HStack bg="white" alignItems="flex-end" style={styles.content}>
         <VStack space={2}>
           <HStack space="2" alignItems="center">
-            <Image size={34} source={ProfileImage} alt="profile-image" />
+            <Button
+              style={{
+                backgroundColor: 'transparent',
+                paddingLeft: 0,
+                paddingRight: 0,
+              }}
+              onPress={() => navigation.navigate('PROFILE')}
+            >
+              <Image size={34} source={ProfileImage} alt="profile-image" />
+            </Button>
             <Text
               color="#323232"
               fontSize="14"
@@ -233,8 +242,8 @@ const styles = StyleSheet.create({
     // backgroundColor: 'green',
     alignItems: 'center',
     justifyContent: 'center',
-    width: 70,
-    height: 70,
+    width: 54,
+    height: 54,
     marginBottom: 10,
     borderRadius: 35,
     shadowColor: 'rgba(0,0,0,0.2)',
