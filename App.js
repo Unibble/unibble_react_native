@@ -47,7 +47,7 @@ function App() {
           <Stack.Screen
             name="CREATE_BUBBLE"
             component={CreateBubbleScreen}
-            options={{ title: '' }}
+            options={{ title: '약속잡기' }}
           />
         </Stack.Navigator>
       </NavigationContainer>
