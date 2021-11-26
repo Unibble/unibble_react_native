@@ -9,6 +9,7 @@ import {
   Container,
   Badge,
   HStack,
+  TextArea,
 } from 'native-base';
 import { StyleSheet, View, Text } from 'react-native';
 
@@ -60,6 +61,7 @@ function CreateBubbleScreen() {
             borderRightColor: 'transparent',
             borderTopColor: 'transparent',
             borderLeftColor: 'transparent',
+            fontSize: 16,
           }}
         />
         {'name' in errors ? (
@@ -88,6 +90,7 @@ function CreateBubbleScreen() {
             borderRightColor: 'transparent',
             borderTopColor: 'transparent',
             borderLeftColor: 'transparent',
+            fontSize: 16,
           }}
         />
         {'name' in errors ? (
@@ -116,6 +119,7 @@ function CreateBubbleScreen() {
             borderRightColor: 'transparent',
             borderTopColor: 'transparent',
             borderLeftColor: 'transparent',
+            fontSize: 16,
           }}
         />
         {'name' in errors ? (
@@ -147,6 +151,7 @@ function CreateBubbleScreen() {
             borderRightColor: 'transparent',
             borderTopColor: 'transparent',
             borderLeftColor: 'transparent',
+            fontSize: 16,
           }}
         />
         {'name' in errors ? (
@@ -197,6 +202,32 @@ function CreateBubbleScreen() {
             <Text style={styles.badgeText}>기타만남</Text>
           </Badge>
         </HStack>
+      </FormControl>
+      <FormControl isInvalid={'name' in errors} style={{ marginBottom: 10 }}>
+        <FormControl.Label _text={{ bold: true }}>
+          <Text style={styles.defaultText}>추가할 내용이 있나요?</Text>
+          <Text style={styles.pointColor}> (최대 100자)</Text>
+        </FormControl.Label>
+        <TextArea
+          h={20}
+          placeholder="약속에 필요한 준비물, 구체적인 장소를 알려주세요. 필요하다면 오픈채팅 링크를 남겨도 좋아요"
+          w={{
+            base: '100%',
+            md: '25%',
+          }}
+          style={{ borderColor: '#DBDBDB', borderRadius: 12, fontSize: 14 }}
+        />
+        {'name' in errors ? (
+          <FormControl.ErrorMessage
+            _text={{ fontSize: 'xs', color: 'error.500', fontWeight: 500 }}
+          >
+            Error
+          </FormControl.ErrorMessage>
+        ) : (
+          <FormControl.HelperText _text={{ fontSize: 'xs' }}>
+            {/* Name should contain atleast 3 character. */}
+          </FormControl.HelperText>
+        )}
       </FormControl>
       <Button onPress={onSubmit} mt="5" colorScheme="cyan">
         Submit
