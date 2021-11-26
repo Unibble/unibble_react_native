@@ -6,6 +6,7 @@ import FeedScreen from 'components/views/FeedScreen';
 import SettingsScreen from 'components/views/SettingsScreen';
 import ProfileScreen from 'components/views/ProfileScreen';
 import CreateBubbleScreen from 'components/views/CreateBubbleScreen';
+import DetailBubbleScreen from 'components/views/DetailBubbleScreen';
 import { NativeBaseProvider } from 'native-base';
 import SplashScreen from 'react-native-splash-screen';
 
@@ -49,6 +50,11 @@ function App() {
             name="CREATE_BUBBLE"
             component={CreateBubbleScreen}
             options={{ title: '약속잡기' }}
+          />
+          <Stack.Screen
+            name="DETAIL_BUBBLE"
+            component={DetailBubbleScreen}
+            options={{ title: '약속잡기', headerShown: false }}
           />
         </Stack.Navigator>
       </NavigationContainer>
