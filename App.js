@@ -44,7 +44,7 @@ function App() {
           <Stack.Screen
             name="PROFILE"
             component={ProfileScreen}
-            options={{ title: '' }}
+            options={{ title: '', headerShown: false }}
           />
           <Stack.Screen
             name="CREATE_BUBBLE"
