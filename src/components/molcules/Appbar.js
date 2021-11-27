@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   VStack,
   HStack,
@@ -23,9 +23,11 @@ import BeerImage from 'assets/images/beerImage.png';
 import GameImage from 'assets/images/gameImage.png';
 import { useNavigation } from '@react-navigation/native';
 import styled from 'styled-components/native';
+import axios from 'axios';
 
 function AppBar(props) {
   const navigation = useNavigation();
+  const [user, setUser] = useState({});
   const [isAll, setIsAll] = useState(true);
   const [isRiceCategory, setIsRiceCategory] = useState(false);
   const [isBeerCategory, setIsBeerCategory] = useState(false);
@@ -49,7 +51,16 @@ function AppBar(props) {
   const GameCategoryButtonClick = () => {
     setIsGameCategory(!isGameCategory);
   };
-
+  useEffect(() => {
+    axios({
+      method: 'GET',
+      url: 'http://127.0.0.1:8000/user/get_unibber/',
+      headers: {
+        Authorization: 'token 508f7da65e78e5a65e076109fe987f18e245b18e',
+      },
+    }).then((response) => setUser(response.data));
+  }, []);
+  console.log('user: ', user);
   return (
     <>
       <StatusBar backgroundColor="#3700B3" barStyle="light-content" />
@@ -73,7 +84,7 @@ function AppBar(props) {
               fontWeight="bold"
               style={styles.profileName}
             >
-              두식
+              {user.nickname}
             </Text>
             <IconButton
               icon={

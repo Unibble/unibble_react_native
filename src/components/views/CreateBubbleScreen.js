@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import {
   VStack,
   Button,
@@ -11,17 +11,20 @@ import {
   HStack,
   TextArea,
 } from 'native-base';
-import { StyleSheet, View, Text } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  DatePickerIOS,
+  TouchableOpacity,
+} from 'react-native';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import format from 'utils/datetime';
 
 export default function CreateBubbleScreen() {
   const [bubbleName, setBubbleName] = React.useState({});
   const [errors, setErrors] = React.useState({});
-  const menus = ['Menu1', 'Menu2', 'Menu3', 'Menu4'];
-  const menuList = menus.map((menu) => (
-    <Badge style={styles.badge} alignSelf="center" varient={'outline'}>
-      <Text style={{ color: '#7371FF', fontSize: 16 }}>{menu}</Text>
-    </Badge>
-  ));
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [datetime, setDatetime] = React.useState('');
 
   const validate = () => {
     if (bubbleName.name === undefined) {
@@ -39,6 +42,22 @@ export default function CreateBubbleScreen() {
     }
     return true;
   };
+
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleConfirm = (date) => {
+    console.warn('A date has been picked: ', date);
+
+    hideDatePicker();
+    setDatetime(date.format('yyyy-MM-dd HH:mm:ss'));
+  };
+  console.log(datetime);
 
   const onSubmit = () => {
     validate() ? console.log('Submitted') : console.log('Validation Failed');
@@ -87,19 +106,25 @@ export default function CreateBubbleScreen() {
             <FormControl.Label _text={{ bold: true }}>
               <Text style={styles.defaultText}>언제 만날 버블인가요?</Text>
             </FormControl.Label>
-            <Input
-              placeholder="월, 일, 시간을 적어주세요"
-              onChangeText={(value) =>
-                setBubbleName({ ...bubbleName, name: value })
-              }
-              style={{
-                borderColor: '#DBDBDB',
-                borderRightColor: 'transparent',
-                borderTopColor: 'transparent',
-                borderLeftColor: 'transparent',
-                fontSize: 16,
-              }}
-            />
+            <TouchableOpacity onPress={showDatePicker}>
+              <Input
+                pointerEvents="none"
+                placeholder="월, 일, 시간을 적어주세요"
+                // onChangeText={(value) =>
+                //   setBubbleName({ ...bubbleName, name: value })
+                // }
+                value={datetime}
+                editable={false}
+                // onPress={showDatePicker}
+                style={{
+                  borderColor: '#DBDBDB',
+                  borderRightColor: 'transparent',
+                  borderTopColor: 'transparent',
+                  borderLeftColor: 'transparent',
+                  fontSize: 16,
+                }}
+              />
+            </TouchableOpacity>
             {'name' in errors ? (
               <FormControl.ErrorMessage
                 _text={{ fontSize: 'xs', color: 'error.500', fontWeight: 500 }}
@@ -294,6 +319,12 @@ export default function CreateBubbleScreen() {
             <Text style={styles.unSubmitText}>버블 띄우기</Text>
           </Button>
         </VStack>
+        <DateTimePickerModal
+          isVisible={isDatePickerVisible}
+          mode="datetime"
+          onConfirm={handleConfirm}
+          onCancel={hideDatePicker}
+        />
       </Center>
     </NativeBaseProvider>
   );

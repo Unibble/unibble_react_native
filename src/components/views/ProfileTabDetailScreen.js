@@ -269,7 +269,7 @@ export default function ProfileScreen({ route }) {
                           varient={'outline'}
                           opacity={`${item.status === '모집마감' ? 0.2 : 1}`}
                           style={{
-                            marginTop: 47,
+                            marginTop: 40,
                             backgroundColor: `${
                               item.status === '참여하기' ? '#323232' : 'white'
                             }`,

@@ -1,5 +1,5 @@
 //MainScreen.js
-import React, { Component } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import { StyleSheet, SafeAreaView } from 'react-native';
 // import Text from 'components/common/Text';
 // import Card from 'components/molcules/Card';
@@ -8,6 +8,7 @@ import AppBar from 'components/molcules/Appbar.js';
 import Icon from 'react-native-vector-icons/Ionicons';
 import FloatingButton from 'components/molcules/FloatingButton.js';
 import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
 
 import {
   NativeBaseProvider,
@@ -24,9 +25,11 @@ import {
   Badge,
   View,
 } from 'native-base';
+import { convertAbsoluteToRem } from 'native-base/lib/typescript/theme/tools';
 
 function FeedScreen({ navigation }) {
   const navigations = useNavigation();
+  const [user, setUser] = useState({});
 
   const data = [
     {
@@ -62,9 +65,9 @@ function FeedScreen({ navigation }) {
       recentText: '카공하자.. 시험기간이다..',
       place: '엔제리너스 건대점',
       datetime: '11월 8일 18시',
-      status: '참여하기',
+      status: '참여완료',
       totalNum: '5',
-      joinNum: '1',
+      joinNum: '2',
       avatarUrl: 'https://miro.medium.com/max/1400/0*0fClPmIScV5pTLoE.jpg',
     },
     {
@@ -120,6 +123,7 @@ function FeedScreen({ navigation }) {
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSr01zI37DYuR8bMV5exWQBSw28C1v_71CAh8d7GP1mplcmTgQA6Q66Oo--QedAN1B4E1k&usqp=CAU',
     },
   ];
+
   return (
     <>
       <AppBar navigation={navigation} style={{ zIndex: 4 }} />
@@ -262,7 +266,7 @@ function FeedScreen({ navigation }) {
                           varient={'outline'}
                           opacity={`${item.status === '모집마감' ? 0.2 : 1}`}
                           style={{
-                            marginTop: 47,
+                            marginTop: 40,
                             backgroundColor: `${
                               item.status === '참여하기' ? '#323232' : 'white'
                             }`,

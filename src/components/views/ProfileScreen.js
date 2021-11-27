@@ -37,6 +37,7 @@ export default function ProfileScreen() {
                 border="1px solid #EAEAEA"
                 marginRight="20px"
                 source={NewProfileImage}
+                alt="profile-image"
               />
               <VStack>
                 <HStack>
@@ -150,6 +151,11 @@ export default function ProfileScreen() {
                 <HStack>
                   <Text style={styles.tabMenuTitle}>내가 찜한 버블</Text>
                   <IconButton
+                    onPress={() =>
+                      navigation.navigate('PROFILE_TAB_DETAIL', {
+                        title: '내가 찜한 버블',
+                      })
+                    }
                     style={{
                       borderRadius: 20,
                       marginTop: -10,
@@ -173,6 +179,11 @@ export default function ProfileScreen() {
                 <HStack>
                   <Text style={styles.tabMenuTitle}>공지사항</Text>
                   <IconButton
+                    onPress={() =>
+                      navigation.navigate('PROFILE_TAB_DETAIL', {
+                        title: '공지사항',
+                      })
+                    }
                     style={{
                       borderRadius: 20,
                       marginTop: -10,
@@ -193,6 +204,11 @@ export default function ProfileScreen() {
                 <HStack>
                   <Text style={styles.tabMenuTitle}>신고하기</Text>
                   <IconButton
+                    onPress={() =>
+                      navigation.navigate('PROFILE_TAB_DETAIL', {
+                        title: '신고하기',
+                      })
+                    }
                     style={{
                       borderRadius: 20,
                       marginTop: -10,

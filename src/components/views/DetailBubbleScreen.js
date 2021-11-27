@@ -26,7 +26,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 export default function DetailBubbleScreen() {
   const item = {
     status: '참여완료',
-    participants: '2/2',
+    participants: '2/5',
   };
   return (
     <NativeBaseProvider>
