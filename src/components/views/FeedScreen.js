@@ -138,6 +138,7 @@ function FeedScreen({ navigation }) {
             <FlatList
               data={data}
               style={{ overflow: 'hidden', zIndex: 7 }}
+              showsVerticalScrollIndicator={false}
               renderItem={({ item }) => (
                 <Box
                   borderBottomWidth="1"
@@ -155,7 +156,7 @@ function FeedScreen({ navigation }) {
                   py="2"
                 >
                   <HStack space={3} justifyContent="space-between">
-                    <VStack>
+                    <VStack style={{ maxWidth: '60%' }}>
                       <HStack>
                         <Avatar
                           size="28px"

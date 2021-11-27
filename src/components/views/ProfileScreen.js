@@ -125,6 +125,11 @@ export default function ProfileScreen() {
                 <HStack>
                   <Text style={styles.tabMenuTitle}>내가 띄운 버블</Text>
                   <IconButton
+                    onPress={() =>
+                      navigation.navigate('PROFILE_TAB_DETAIL', {
+                        title: '내가 띄운 버블',
+                      })
+                    }
                     style={{
                       borderRadius: 20,
                       marginTop: -10,

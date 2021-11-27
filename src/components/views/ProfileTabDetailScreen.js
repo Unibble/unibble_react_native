@@ -142,6 +142,7 @@ export default function ProfileScreen({ route }) {
             <FlatList
               data={data}
               style={{ overflow: 'hidden', zIndex: 7 }}
+              showsVerticalScrollIndicator={false}
               renderItem={({ item }) => (
                 <Box
                   borderBottomWidth="1"
@@ -159,8 +160,8 @@ export default function ProfileScreen({ route }) {
                   py="2"
                 >
                   <HStack space={3} justifyContent="space-between">
-                    <VStack>
-                      <HStack style={{ maxWidth: '60%' }}>
+                    <VStack style={{ maxWidth: '70%' }}>
+                      <HStack>
                         <Avatar
                           size="28px"
                           border="1px solid #EAEAEA"
