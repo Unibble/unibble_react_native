@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   VStack,
   HStack,
@@ -16,6 +16,7 @@ import {
 } from 'native-base';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import FeatherIcon from 'react-native-vector-icons/Feather';
 import ProfileImage from 'assets/images/profileImage.png';
 import RiceImage from 'assets/images/riceImage.png';
 import StudyImage from 'assets/images/studyImage.png';
@@ -23,9 +24,22 @@ import BeerImage from 'assets/images/beerImage.png';
 import GameImage from 'assets/images/gameImage.png';
 import { useNavigation } from '@react-navigation/native';
 import styled from 'styled-components/native';
+import axios from 'axios';
 
 export default function BubbleDetailStatusBar(props) {
   const navigation = useNavigation();
+  const [like, setLike] = useState(false);
+  console.log(props);
+
+  const likeAction = () => {
+    let request = axios({
+      method: 'POST',
+      url: `http://127.0.0.1:8000/bubble/zzim_bubble/${props.bubbleId}/`,
+      headers: {
+        Authorization: 'token d72545e327359bc0c4a6ddc06ab23a30de164fe1',
+      },
+    }).then((response) => setLike(!like));
+  };
 
   return (
     <NativeBaseProvider>
@@ -56,8 +70,8 @@ export default function BubbleDetailStatusBar(props) {
               ></Text>
               <IconButton
                 icon={
-                  <Icon
-                    name="ios-notifications"
+                  <FeatherIcon
+                    name="more-horizontal"
                     size={20}
                     color="#4A4A4A"
                     onPress={() => {
@@ -65,7 +79,34 @@ export default function BubbleDetailStatusBar(props) {
                     }}
                   />
                 }
-                style={styles.icon}
+                style={styles.defaultButton}
+              />
+              <IconButton
+                icon={
+                  <FeatherIcon
+                    name="upload"
+                    size={20}
+                    color="#4A4A4A"
+                    onPress={() => {
+                      navigation.navigate('DETAIL');
+                    }}
+                  />
+                }
+                style={styles.defaultButton}
+              />
+              <IconButton
+                icon={
+                  <Icon
+                    name="ios-heart"
+                    size={20}
+                    color="white"
+                    onPress={likeAction}
+                  />
+                }
+                style={[
+                  styles.icon,
+                  { backgroundColor: `${like ? '#7371FF' : '#F0F1F5'}` },
+                ]}
               />
             </HStack>
           </VStack>
@@ -82,9 +123,14 @@ const styles = StyleSheet.create({
   },
 
   profileName: {
-    width: 300,
+    width: 210,
   },
   icon: {
+    textAlign: 'right',
+    // backgroundColor: '#F0F1F5',
+    borderRadius: 50,
+  },
+  defaultButton: {
     textAlign: 'right',
   },
   backButton: {

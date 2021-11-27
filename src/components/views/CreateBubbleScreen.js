@@ -83,7 +83,15 @@ export default function CreateBubbleScreen() {
       headers: {
         Authorization: 'token 508f7da65e78e5a65e076109fe987f18e245b18e',
       },
-    }).then((response) => setUser(response.data));
+    }).then((response) =>
+      axios({
+        method: 'POST',
+        url: `http://127.0.0.1:8000/bubble/participate_bubble/${response.data.id}/`,
+        headers: {
+          Authorization: 'token 508f7da65e78e5a65e076109fe987f18e245b18e',
+        },
+      }),
+    );
   };
   return (
     <NativeBaseProvider>

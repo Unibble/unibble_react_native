@@ -60,7 +60,7 @@ function AppBar(props) {
       },
     }).then((response) => setUser(response.data));
   }, []);
-  console.log('user: ', user);
+  // console.log('user: ', user);
   return (
     <>
       <StatusBar backgroundColor="#3700B3" barStyle="light-content" />

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import BubbleDetailStatusBar from 'components/molcules/BubbleDetailStatusBar';
 import {
   VStack,
@@ -22,15 +22,20 @@ import ProfileImage from 'assets/images/profileImage.png';
 import PlaceImage from 'assets/images/placeImage.png';
 import NewProfileImage from 'assets/images/newProfile.png';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import axios from 'axios';
 
-export default function DetailBubbleScreen() {
+export default function DetailBubbleScreen({ route }) {
+  const [bubble, setBubble] = useState({});
   const item = {
     status: '참여완료',
     participants: '2/5',
   };
+  let bubbleData = route.params;
+
+  console.log(bubble);
   return (
     <NativeBaseProvider>
-      <BubbleDetailStatusBar />
+      <BubbleDetailStatusBar bubbleId={bubbleData.bubbleId} />
 
       <Box flex={9} style={{ backgroundColor: 'white', paddingLeft: 16 }}>
         <VStack style={{ marginTop: 20 }}>
@@ -53,7 +58,7 @@ export default function DetailBubbleScreen() {
                 bold
                 style={{ marginRight: 4 }}
               >
-                두식
+                {bubbleData.hostNickname}
               </Text>
               <Text
                 _dark={{
@@ -62,13 +67,14 @@ export default function DetailBubbleScreen() {
                 fontFamily="Noto Sans KR"
                 color="#4A4A4A"
               >
-                건국대 서울캠 공학계열
+                {bubbleData.hostUniv} {bubbleData.hostCampus}{' '}
+                {bubbleData.hostMajor}
               </Text>
             </VStack>
             <Badge
               alignSelf="center"
               varient={'outline'}
-              opacity={`${item.status === '모집마감' ? 0.2 : 1}`}
+              opacity={`${bubbleData.bubbleStatus === '모집마감' ? 0.2 : 1}`}
               style={{
                 marginTop: 0,
                 backgroundColor: `${
@@ -83,7 +89,9 @@ export default function DetailBubbleScreen() {
             >
               <Text
                 style={{
-                  color: `${item.status === '참여하기' ? 'white' : '#323232'}`,
+                  color: `${
+                    bubbleData.bubbleStatus === '참여하기' ? 'white' : '#323232'
+                  }`,
                   fontSize: 16,
                   paddingTop: 5,
                   paddingBottom: 5,
@@ -92,7 +100,7 @@ export default function DetailBubbleScreen() {
                   fontWeight: '400',
                 }}
               >
-                {item.status}
+                {bubbleData.bubbleStatus}
               </Text>
             </Badge>
           </HStack>
@@ -100,12 +108,12 @@ export default function DetailBubbleScreen() {
         <VStack style={{ marginTop: 16 }}>
           <Stack p="4" space={3}>
             <Stack space={2}>
-              <Text style={styles.Title}>카공하자.. 시험기간이다..</Text>
+              <Text style={styles.Title}>{bubbleData.bubbleTitle}</Text>
               <Text style={styles.timeLineDescription}>스터디 1시간 전</Text>
             </Stack>
 
             <Text style={styles.subDescription}>
-              각자 공부할 것들 들고 엔제리너스 2층 창가쪽에서 공부해요!
+              {bubbleData.bubbleContent}
             </Text>
             <Badge style={styles.placeDescription}>
               <VStack style={{ marginLeft: -150 }}>
@@ -116,7 +124,17 @@ export default function DetailBubbleScreen() {
                     alt="profile-image"
                     style={{ marginRight: 10 }}
                   />
-                  <Text style={styles.boldText}>11월 8일 18시</Text>
+                  <Text style={styles.boldText}>
+                    {bubbleData.bubbleDeadline.replace('T', '-').split('-')[1]}
+                    월<Text> </Text>
+                    {bubbleData.bubbleDeadline.replace('T', '-').split('-')[2]}
+                    일<Text> </Text>
+                    {bubbleData.bubbleDeadline
+                      .replace('T', '-')
+                      .split('-')[3]
+                      .slice(0, 2)}
+                    시
+                  </Text>
                   <Text>에 만나요!</Text>
                 </HStack>
                 <HStack style={{ marginTop: 16 }}>
@@ -126,7 +144,9 @@ export default function DetailBubbleScreen() {
                     alt="place-image"
                     style={{ marginRight: 10 }}
                   />
-                  <Text style={styles.boldText}>엔제리너스 건대점</Text>
+                  <Text style={styles.boldText}>
+                    {bubbleData.bubbleLocation}
+                  </Text>
                 </HStack>
                 <HStack style={{ marginTop: 4, marginLeft: 32 }}>
                   <Text
@@ -154,8 +174,8 @@ export default function DetailBubbleScreen() {
                   style={{ marginLeft: -20 }}
                 />
                 <HStack style={{ marginTop: 10, marginLeft: 10 }}>
-                  <Text style={styles.boldText}>지식</Text>
-                  <Text>님 외 1명 참여중</Text>
+                  <Text style={styles.boldText}>{bubbleData.hostNickname}</Text>
+                  <Text>님 외 {bubbleData.guestNum - 1}명 참여중</Text>
                 </HStack>
                 <HStack style={{ marginLeft: 10 }}>
                   <Badge
@@ -187,7 +207,7 @@ export default function DetailBubbleScreen() {
                         fontWeight: '400',
                       }}
                     >
-                      {item.participants}명
+                      {bubbleData.guestNum}/{bubbleData.guestMax}명
                     </Text>
                   </Badge>
                 </HStack>

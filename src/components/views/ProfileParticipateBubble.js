@@ -1,38 +1,35 @@
-//MainScreen.js
-import React, { Component, useEffect, useState } from 'react';
-import { StyleSheet, SafeAreaView } from 'react-native';
-// import Text from 'components/common/Text';
-// import Card from 'components/molcules/Card';
-import profileImage from 'assets/images/profileImage.png';
-import AppBar from 'components/molcules/Appbar.js';
-import Icon from 'react-native-vector-icons/Ionicons';
-import FloatingButton from 'components/molcules/FloatingButton.js';
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet } from 'react-native';
+import NewProfileImage from 'assets/images/newProfileImage.png';
+import ProfileTabStatusBar from 'components/molcules/ProfileTabStatusBar';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 
 import {
-  NativeBaseProvider,
-  Box,
-  Heading,
-  FlatList,
-  HStack,
-  Avatar,
   VStack,
-  Spacer,
-  Text,
-  Center,
+  HStack,
   Button,
+  IconButton,
+  Text,
   Badge,
-  View,
+  NativeBaseProvider,
+  Center,
+  Image,
+  Box,
+  StatusBar,
+  Stack,
+  ScrollView,
+  Heading,
+  Avatar,
+  FlatList,
+  Spacer,
 } from 'native-base';
-import { convertAbsoluteToRem } from 'native-base/lib/typescript/theme/tools';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
-function FeedScreen({ navigation }) {
-  const navigations = useNavigation();
-  const [bubbles, setBubbles] = useState([]);
+export default function ProfileScreen({ route }) {
+  const title = route.params.title;
   const [participants, setParticipants] = useState([]);
   let today = new Date();
-
   const unitsTable = [
     '밥',
     '술',
@@ -44,7 +41,6 @@ function FeedScreen({ navigation }) {
     '스터디',
     '기타만남',
   ];
-
   const data = [
     {
       id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
@@ -59,125 +55,7 @@ function FeedScreen({ navigation }) {
       avatarUrl:
         'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
     },
-    {
-      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-      fullName: '미식',
-      univName: '건국대 서울캠 공학계열',
-      recentText: '곱창전골 먹을 사람!!',
-      place: '왕가네 곱창 건대점',
-      status: '모집마감',
-      datetime: '11월 7일 18시',
-      totalNum: '6',
-      joinNum: '5',
-      avatarUrl:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyEaZqT3fHeNrPGcnjLLX1v_W4mvBlgpwxnA&usqp=CAU',
-    },
-    {
-      id: '58694a0f-3da1-471f-bd96-145571e29d72',
-      fullName: '두식',
-      univName: '건국대 서울캠 공학계열',
-      recentText: '카공하자.. 시험기간이다..',
-      place: '엔제리너스 건대점',
-      datetime: '11월 8일 18시',
-      status: '참여완료',
-      totalNum: '5',
-      joinNum: '2',
-      avatarUrl: 'https://miro.medium.com/max/1400/0*0fClPmIScV5pTLoE.jpg',
-    },
-    {
-      id: '68694a0f-3da1-431f-bd56-142371e29d72',
-      fullName: '두식',
-      univName: '건국대 서울캠 공학계열',
-      recentText: '곱창전골 먹을 사람!!',
-      place: '왕가네 곱창 건대점',
-      status: '참여완료',
-      datetime: '11월 7일 18시',
-      totalNum: '5',
-      joinNum: '1',
-      avatarUrl:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSr01zI37DYuR8bMV5exWQBSw28C1v_71CAh8d7GP1mplcmTgQA6Q66Oo--QedAN1B4E1k&usqp=CAU',
-    },
-    {
-      id: '28694a0f-3da1-471f-bd96-142456e29d72',
-      fullName: '미식',
-      univName: '건국대 서울캠 인문계열',
-      recentText: '같이 훠궈 먹어요!',
-      place: '왕가네 곱창 건대점',
-      datetime: '11월 7일 18시',
-      status: '모집마감',
-      totalNum: '5',
-      joinNum: '1',
-      avatarUrl:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBwgu1A5zgPSvfE83nurkuzNEoXs9DMNr8Ww&usqp=CAU',
-    },
-    {
-      id: '68694a0f-3da1-431f-bd56-142371e29d73',
-      fullName: '두식',
-      univName: '건국대 서울캠 공학계열',
-      recentText: '곱창전골 먹을 사람!!',
-      place: '왕가네 곱창 건대점',
-      datetime: '11월 7일 18시',
-      status: '참여하기',
-      totalNum: '5',
-      joinNum: '1',
-      avatarUrl:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSr01zI37DYuR8bMV5exWQBSw28C1v_71CAh8d7GP1mplcmTgQA6Q66Oo--QedAN1B4E1k&usqp=CAU',
-    },
-    {
-      id: '68694a0f-3da1-431f-bd56-142371e29d74',
-      fullName: '두식',
-      univName: '건국대 서울캠 공학계열',
-      recentText: '곱창전골 먹을 사람!!',
-      place: '왕가네 곱창 건대점',
-      datetime: '11월 7일 18시',
-      status: '모집마감',
-      totalNum: '5',
-      joinNum: '1',
-      avatarUrl:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSr01zI37DYuR8bMV5exWQBSw28C1v_71CAh8d7GP1mplcmTgQA6Q66Oo--QedAN1B4E1k&usqp=CAU',
-    },
   ];
-
-  const isParticipate = (bubbleId) => {
-    for (let i = 0; i < participants.length; i++) {
-      if (participants[i].id === bubbleId) {
-        return '참여완료';
-      }
-    }
-    return '참여하기';
-  };
-
-  const compareDate = (datetime) => {
-    // console.log(datetime);
-    let dateParsingData = datetime.split('-');
-    let date = new Date(
-      `${dateParsingData[0]}-${dateParsingData[1]}-${dateParsingData[2]}`,
-    );
-    // console.log(date);
-    return date.getTime();
-  };
-
-  const inviteBubble = (bubbleId) => {
-    axios({
-      method: 'POST',
-      url: `http://127.0.0.1:8000/bubble/participate_bubble/${bubbleId}/`,
-      headers: {
-        Authorization: 'token d72545e327359bc0c4a6ddc06ab23a30de164fe1',
-      },
-    }).then((response) => console.log('api'));
-  };
-
-  useEffect(() => {
-    axios({
-      method: 'GET',
-      url: 'http://127.0.0.1:8000/bubble/get_feed_bubble/',
-      headers: {
-        Authorization: 'token d72545e327359bc0c4a6ddc06ab23a30de164fe1',
-      },
-    }).then((response) => setBubbles(response.data));
-  }, [bubbles]);
-  // console.log(bubbles);
-
   useEffect(() => {
     axios({
       method: 'GET',
@@ -188,22 +66,27 @@ function FeedScreen({ navigation }) {
     }).then((response) => setParticipants(response.data));
   }, [participants]);
   return (
-    <>
-      <AppBar navigation={navigation} style={{ zIndex: 4 }} />
-      <View style={styles.container}>
-        <Center style={{ overflow: 'hidden' }}>
-          <Box
-            w={{
-              base: 373,
-              md: '100%',
-            }}
-            style={{ overflow: 'hidden' }}
-          >
-            <Center flex={1} px="3" style={{ zIndex: 10 }}>
-              <FloatingButton />
-            </Center>
+    <NativeBaseProvider>
+      <ProfileTabStatusBar />
+      <Box flex={9} style={{ backgroundColor: 'white', paddingLeft: 16 }}>
+        <View style={styles.container}>
+          <VStack space={4}>
+            <HStack style={{ marginTop: 30 }}>
+              <Text style={styles.sectionTitle}>{title}</Text>
+            </HStack>
+            <HStack
+              style={{
+                backgroundColor: '#F0F1F5',
+                width: '150%',
+                height: '800%',
+                zIndex: 4,
+                top: 80,
+                marginLeft: -50,
+                position: 'absolute',
+              }}
+            ></HStack>
             <FlatList
-              data={bubbles}
+              data={participants}
               style={{ overflow: 'hidden', zIndex: 7 }}
               showsVerticalScrollIndicator={false}
               renderItem={({ item }) => (
@@ -263,7 +146,7 @@ function FeedScreen({ navigation }) {
                           varient={'outline'}
                         >
                           <Text style={{ color: '#7371FF', fontSize: 12 }}>
-                            {unitsTable[item.unit - 1]}
+                            {item.unit}
                           </Text>
                         </Badge>
                         <Text
@@ -329,7 +212,7 @@ function FeedScreen({ navigation }) {
                           {item.guestNum}/{item.guestMax}명
                         </Text>
                       </Badge>
-                      {`${compareDate(item.deadline)}` <
+                      {/* {`${compareDate(item.deadline)}` <
                       `${today.getTime()}` ? (
                         <Button
                           onPress={() => navigations.navigate('DETAIL_BUBBLE')}
@@ -369,87 +252,87 @@ function FeedScreen({ navigation }) {
                             </Text>
                           </Badge>
                         </Button>
-                      ) : (
-                        <Button
-                          onPress={() => {
-                            `${isParticipate(item.bubbleId)}` !== '참여하기'
-                              ? navigations.navigate('DETAIL_BUBBLE', {
-                                  bubbleId: `${item.bubbleId}`,
-                                  bubbleDeadline: `${item.deadline}`,
-                                  bubbleTitle: `${item.title}`,
-                                  bubbleStatus: `${isParticipate(
-                                    item.bubbleId,
-                                  )}`,
-                                  hostNickname: `${item.host.nickName}`,
-                                  bubbleContent: `${item.content}`,
-                                  bubbleLocation: `${item.location}`,
-                                  hostUniv: `${item.host.univName}`,
-                                  hostMajor: `${item.host.major}`,
-                                  hostCampus: `${item.host.univCampus}`,
-                                  guestNum: `${item.guestNum}`,
-                                  guestMax: `${item.guestMax}`,
-                                })
-                              : `${inviteBubble(item.bubbleId)}`;
+                      ) : ( */}
+                      <Button
+                        onPress={() => {
+                          navigations.navigate('DETAIL_BUBBLE', {
+                            bubbleId: `${item.bubbleId}`,
+                            bubbleDeadline: `${item.deadline}`,
+                            bubbleTitle: `${item.title}`,
+                            bubbleStatus: `참여완료`,
+                            hostNickname: `${item.host.nickName}`,
+                            bubbleContent: `${item.content}`,
+                            bubbleLocation: `${item.location}`,
+                            hostUniv: `${item.host.univName}`,
+                            hostMajor: `${item.host.major}`,
+                            hostCampus: `${item.host.univCampus}`,
+                            guestNum: `${item.guestNum}`,
+                            guestMax: `${item.guestMax}`,
+                          });
+                        }}
+                        style={{ backgroundColor: 'transparent' }}
+                      >
+                        <Badge
+                          alignSelf="center"
+                          varient={'outline'}
+                          opacity={`${Date(item.deadline) < today ? 0.2 : 1}`}
+                          style={{
+                            marginTop: 40,
+                            backgroundColor: 'white',
+                            borderColor: '#323232',
+                            borderRadius: 18,
                           }}
-                          style={{ backgroundColor: 'transparent' }}
                         >
-                          <Badge
-                            alignSelf="center"
-                            varient={'outline'}
-                            opacity={`${Date(item.deadline) < today ? 0.2 : 1}`}
+                          <Text
                             style={{
-                              marginTop: 40,
-                              backgroundColor: `${
-                                isParticipate(item.bubbleId) === '참여하기'
-                                  ? '#323232'
-                                  : 'white'
-                              }`,
-                              borderColor: `${
-                                isParticipate(item.bubbleId) === '참여하기'
-                                  ? 'white'
-                                  : '#323232'
-                              }`,
-                              borderRadius: 18,
+                              color: '#323232',
+                              fontSize: 12,
                             }}
                           >
-                            <Text
-                              style={{
-                                color: `${
-                                  isParticipate(item.bubbleId) === '참여하기'
-                                    ? 'white'
-                                    : '#323232'
-                                }`,
-                                fontSize: 12,
-                              }}
-                            >
-                              {isParticipate(item.bubbleId)}
-                            </Text>
-                          </Badge>
-                        </Button>
-                      )}
+                            참여완료
+                          </Text>
+                        </Badge>
+                      </Button>
+                      {/* )} */}
                     </VStack>
                   </HStack>
                 </Box>
               )}
               keyExtractor={(item) => item.bubbleId}
             />
-          </Box>
-        </Center>
-      </View>
-      <View></View>
-    </>
+          </VStack>
+          {/* </Center> */}
+        </View>
+      </Box>
+    </NativeBaseProvider>
   );
 }
 
-export default () => {
-  return (
-    <NativeBaseProvider>
-      <FeedScreen />
-    </NativeBaseProvider>
-  );
-};
-
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    zIndex: 3,
+    margin: 38,
+    marginLeft: 16,
+  },
+  sectionTitle: {
+    fontSize: 24,
+    lineHeight: 36,
+    color: '#343434',
+    fontWeight: 'bold',
+  },
+  tabMenu: {
+    backgroundColor: '#F0F1F5',
+    borderRadius: 9,
+    width: '100%',
+  },
+  tabMenuTitle: {
+    fontSize: 14,
+    lineHeight: 21,
+    fontFamily: 'Noto Sans KR',
+    width: '93%',
+    paddingTop: 5,
+  },
   badge: {
     backgroundColor: 'white',
     borderColor: '#7371FF',
@@ -466,11 +349,5 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     paddingLeft: 10,
     paddingRight: 10,
-  },
-
-  container: {
-    flex: 1,
-    zIndex: 3,
-    marginTop: -330,
   },
 });

@@ -8,6 +8,9 @@ import ProfileScreen from 'components/views/ProfileScreen';
 import CreateBubbleScreen from 'components/views/CreateBubbleScreen';
 import DetailBubbleScreen from 'components/views/DetailBubbleScreen';
 import ProfileTabDetailScreen from './src/components/views/ProfileTabDetailScreen';
+import ProfileParticipateBubbleScreen from 'components/views/ProfileParticipateBubble';
+import ProfileLikeBubbleScreen from 'components/views/ProfileLikeBubble';
+import ProfileHostBubbleScreen from 'components/views/ProfileHostBubble';
 import { NativeBaseProvider } from 'native-base';
 import SplashScreen from 'react-native-splash-screen';
 
@@ -60,6 +63,21 @@ function App() {
           <Stack.Screen
             name="PROFILE_TAB_DETAIL"
             component={ProfileTabDetailScreen}
+            options={{ title: '약속잡기', headerShown: false }}
+          />
+          <Stack.Screen
+            name="PROFILE_TAB_PARTICIPATE"
+            component={ProfileParticipateBubbleScreen}
+            options={{ title: '약속잡기', headerShown: false }}
+          />
+          <Stack.Screen
+            name="PROFILE_TAB_HOST"
+            component={ProfileHostBubbleScreen}
+            options={{ title: '약속잡기', headerShown: false }}
+          />
+          <Stack.Screen
+            name="PROFILE_TAB_Like"
+            component={ProfileLikeBubbleScreen}
             options={{ title: '약속잡기', headerShown: false }}
           />
         </Stack.Navigator>

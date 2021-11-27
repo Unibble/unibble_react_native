@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import NewProfileImage from 'assets/images/newProfileImage.png';
 import ProfileStatusBar from 'components/molcules/ProfileStatusBar';
 import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
 
 import {
   VStack,
@@ -23,8 +24,19 @@ import {
 } from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-export default function ProfileScreen() {
+export default function ProfileParticipateBubbleScreen() {
   const navigation = useNavigation();
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    axios({
+      method: 'GET',
+      url: 'http://127.0.0.1:8000/user/get_unibber/',
+      headers: {
+        Authorization: 'token 508f7da65e78e5a65e076109fe987f18e245b18e',
+      },
+    }).then((response) => setUser(response.data));
+  }, []);
   return (
     <NativeBaseProvider>
       <ProfileStatusBar />
@@ -51,7 +63,7 @@ export default function ProfileScreen() {
                     bold
                     style={{ marginRight: 4, marginTop: 10 }}
                   >
-                    두식
+                    {user.nickname}
                   </Text>
                   <Badge
                     alignSelf="center"
@@ -88,7 +100,7 @@ export default function ProfileScreen() {
                   color="#4A4A4A"
                   fontSize="16px"
                 >
-                  건국대 서울캠 공학계열
+                  {user.university} {user.campus} {user.major}
                 </Text>
               </VStack>
             </HStack>
@@ -101,7 +113,7 @@ export default function ProfileScreen() {
                   <Text style={styles.tabMenuTitle}>약속한 버블 </Text>
                   <IconButton
                     onPress={() =>
-                      navigation.navigate('PROFILE_TAB_DETAIL', {
+                      navigation.navigate('PROFILE_TAB_PARTICIPATE', {
                         title: '약속한 버블',
                       })
                     }
@@ -127,7 +139,7 @@ export default function ProfileScreen() {
                   <Text style={styles.tabMenuTitle}>내가 띄운 버블</Text>
                   <IconButton
                     onPress={() =>
-                      navigation.navigate('PROFILE_TAB_DETAIL', {
+                      navigation.navigate('PROFILE_TAB_HOST', {
                         title: '내가 띄운 버블',
                       })
                     }
@@ -152,7 +164,7 @@ export default function ProfileScreen() {
                   <Text style={styles.tabMenuTitle}>내가 찜한 버블</Text>
                   <IconButton
                     onPress={() =>
-                      navigation.navigate('PROFILE_TAB_DETAIL', {
+                      navigation.navigate('PROFILE_TAB_Like', {
                         title: '내가 찜한 버블',
                       })
                     }
