@@ -19,12 +19,17 @@ import {
 } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import format from 'utils/datetime';
+import axios from 'axios';
 
 export default function CreateBubbleScreen() {
   const [bubbleName, setBubbleName] = React.useState({});
   const [errors, setErrors] = React.useState({});
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [datetime, setDatetime] = React.useState('');
+  const [bubbleLocation, setBubbleLocation] = React.useState('');
+  const [bubbleGuests, setBubbleGuests] = React.useState('');
+  const [unit, setUnit] = React.useState('');
+  const [content, setContent] = React.useState('');
 
   const validate = () => {
     if (bubbleName.name === undefined) {
@@ -61,6 +66,24 @@ export default function CreateBubbleScreen() {
 
   const onSubmit = () => {
     validate() ? console.log('Submitted') : console.log('Validation Failed');
+    axios({
+      method: 'POST',
+      url: 'http://127.0.0.1:8000/bubble/create_bubble/',
+      data: {
+        title: bubbleName.name,
+        time2meet: datetime,
+        location: bubbleLocation.name,
+        address: '',
+        lat: '1',
+        lon: '1',
+        guest_max: bubbleGuests['value'],
+        'unit[]': unit,
+        content: content.name,
+      },
+      headers: {
+        Authorization: 'token 508f7da65e78e5a65e076109fe987f18e245b18e',
+      },
+    }).then((response) => setUser(response.data));
   };
   return (
     <NativeBaseProvider>
@@ -79,6 +102,7 @@ export default function CreateBubbleScreen() {
               onChangeText={(value) =>
                 setBubbleName({ ...bubbleName, name: value })
               }
+              value={bubbleName}
               style={{
                 borderColor: '#DBDBDB',
                 borderRightColor: 'transparent',
@@ -147,8 +171,9 @@ export default function CreateBubbleScreen() {
             <Input
               placeholder="장소를 입력해주세요"
               onChangeText={(value) =>
-                setBubbleName({ ...bubbleName, name: value })
+                setBubbleLocation({ ...bubbleLocation, name: value })
               }
+              value={bubbleLocation}
               style={{
                 borderColor: '#DBDBDB',
                 borderRightColor: 'transparent',
@@ -181,9 +206,8 @@ export default function CreateBubbleScreen() {
             </FormControl.Label>
             <Input
               placeholder="최소인원, 최대인원을 적어주세요."
-              onChangeText={(value) =>
-                setBubbleName({ ...bubbleName, name: value })
-              }
+              onChangeText={(value) => setBubbleGuests({ value })}
+              value={bubbleGuests}
               style={{
                 borderColor: '#DBDBDB',
                 borderRightColor: 'transparent',
@@ -211,69 +235,314 @@ export default function CreateBubbleScreen() {
             {/* <View>{menuList}</View> */}
             <HStack>
               <Badge
-                style={styles.badge}
+                style={[
+                  styles.badge,
+                  {
+                    color: `${unit === 1 ? '#7371FF' : '#DBDBDB'}`,
+                    borderColor: `${unit === 1 ? '#7371FF' : '#DBDBDB'}`,
+                  },
+                ]}
                 alignSelf="center"
                 varient={'outline'}
               >
-                <Text style={styles.badgeText}>밥</Text>
+                <Button
+                  onPress={() => setUnit(1)}
+                  style={{
+                    backgroundColor: 'transparent',
+                    height: 23,
+                    width: 20,
+                    paddingLeft: 0,
+                    paddingRight: 0,
+                    paddingTop: 0,
+                    paddingBottom: 0,
+                    marginTop: 0,
+                  }}
+                >
+                  <Text
+                    style={[
+                      styles.badgeText,
+                      { color: `${unit === 1 ? '#7371FF' : '#DBDBDB'}` },
+                    ]}
+                  >
+                    밥
+                  </Text>
+                </Button>
               </Badge>
               <Badge
-                style={styles.badge}
+                style={[
+                  styles.badge,
+                  {
+                    color: `${unit === 2 ? '#7371FF' : '#DBDBDB'}`,
+                    borderColor: `${unit === 2 ? '#7371FF' : '#DBDBDB'}`,
+                  },
+                ]}
                 alignSelf="center"
                 varient={'outline'}
               >
-                <Text style={styles.badgeText}>술</Text>
+                <Button
+                  onPress={() => setUnit(2)}
+                  style={{
+                    backgroundColor: 'transparent',
+                    height: 23,
+                    width: 20,
+                    paddingLeft: 0,
+                    paddingRight: 0,
+                    paddingTop: 0,
+                    paddingBottom: 0,
+                    marginTop: 0,
+                  }}
+                >
+                  <Text
+                    style={[
+                      styles.badgeText,
+                      { color: `${unit === 2 ? '#7371FF' : '#DBDBDB'}` },
+                    ]}
+                  >
+                    술
+                  </Text>
+                </Button>
               </Badge>
               <Badge
-                style={styles.badge}
+                style={[
+                  styles.badge,
+                  {
+                    color: `${unit === 3 ? '#7371FF' : '#DBDBDB'}`,
+                    borderColor: `${unit === 3 ? '#7371FF' : '#DBDBDB'}`,
+                  },
+                ]}
                 alignSelf="center"
                 varient={'outline'}
               >
-                <Text style={styles.badgeText}>운동</Text>
+                <Button
+                  onPress={() => setUnit(3)}
+                  style={{
+                    backgroundColor: 'transparent',
+                    height: 23,
+                    width: 30,
+                    paddingLeft: 0,
+                    paddingRight: 0,
+                    paddingTop: 0,
+                    paddingBottom: 0,
+                    marginTop: 0,
+                  }}
+                >
+                  <Text
+                    style={[
+                      styles.badgeText,
+                      { color: `${unit === 3 ? '#7371FF' : '#DBDBDB'}` },
+                    ]}
+                  >
+                    운동
+                  </Text>
+                </Button>
               </Badge>
               <Badge
-                style={styles.badge}
+                style={[
+                  styles.badge,
+                  {
+                    color: `${unit === 4 ? '#7371FF' : '#DBDBDB'}`,
+                    borderColor: `${unit === 4 ? '#7371FF' : '#DBDBDB'}`,
+                  },
+                ]}
                 alignSelf="center"
                 varient={'outline'}
               >
-                <Text style={styles.badgeText}>미팅</Text>
+                <Button
+                  onPress={() => setUnit(4)}
+                  style={{
+                    backgroundColor: 'transparent',
+                    height: 23,
+                    width: 30,
+                    paddingLeft: 0,
+                    paddingRight: 0,
+                    paddingTop: 0,
+                    paddingBottom: 0,
+                    marginTop: 0,
+                  }}
+                >
+                  <Text
+                    style={[
+                      styles.badgeText,
+                      { color: `${unit === 4 ? '#7371FF' : '#DBDBDB'}` },
+                    ]}
+                  >
+                    미팅
+                  </Text>
+                </Button>
               </Badge>
               <Badge
-                style={styles.badge}
+                style={[
+                  styles.badge,
+                  {
+                    color: `${unit === 5 ? '#7371FF' : '#DBDBDB'}`,
+                    borderColor: `${unit === 5 ? '#7371FF' : '#DBDBDB'}`,
+                  },
+                ]}
                 alignSelf="center"
                 varient={'outline'}
               >
-                <Text style={styles.badgeText}>게임</Text>
+                <Button
+                  onPress={() => setUnit(5)}
+                  style={{
+                    backgroundColor: 'transparent',
+                    height: 23,
+                    width: 30,
+                    paddingLeft: 0,
+                    paddingRight: 0,
+                    paddingTop: 0,
+                    paddingBottom: 0,
+                    marginTop: 0,
+                  }}
+                >
+                  <Text
+                    style={[
+                      styles.badgeText,
+                      { color: `${unit === 5 ? '#7371FF' : '#DBDBDB'}` },
+                    ]}
+                  >
+                    게임
+                  </Text>
+                </Button>
               </Badge>
             </HStack>
             <HStack style={{ marginTop: 8 }}>
               <Badge
-                style={styles.badge}
+                style={[
+                  styles.badge,
+                  {
+                    color: `${unit === 6 ? '#7371FF' : '#DBDBDB'}`,
+                    borderColor: `${unit === 6 ? '#7371FF' : '#DBDBDB'}`,
+                  },
+                ]}
                 alignSelf="center"
                 varient={'outline'}
               >
-                <Text style={styles.badgeText}>영화</Text>
+                <Button
+                  onPress={() => setUnit(6)}
+                  style={{
+                    backgroundColor: 'transparent',
+                    height: 23,
+                    width: 30,
+                    paddingLeft: 0,
+                    paddingRight: 0,
+                    paddingTop: 0,
+                    paddingBottom: 0,
+                    marginTop: 0,
+                  }}
+                >
+                  <Text
+                    style={[
+                      styles.badgeText,
+                      { color: `${unit === 6 ? '#7371FF' : '#DBDBDB'}` },
+                    ]}
+                  >
+                    영화
+                  </Text>
+                </Button>
               </Badge>
               <Badge
-                style={styles.badge}
+                style={[
+                  styles.badge,
+                  {
+                    color: `${unit === 7 ? '#7371FF' : '#DBDBDB'}`,
+                    borderColor: `${unit === 7 ? '#7371FF' : '#DBDBDB'}`,
+                  },
+                ]}
                 alignSelf="center"
                 varient={'outline'}
               >
-                <Text style={styles.badgeText}>산책</Text>
+                <Button
+                  onPress={() => setUnit(7)}
+                  style={{
+                    backgroundColor: 'transparent',
+                    height: 23,
+                    width: 30,
+                    paddingLeft: 0,
+                    paddingRight: 0,
+                    paddingTop: 0,
+                    paddingBottom: 0,
+                    marginTop: 0,
+                  }}
+                >
+                  <Text
+                    style={[
+                      styles.badgeText,
+                      { color: `${unit === 7 ? '#7371FF' : '#DBDBDB'}` },
+                    ]}
+                  >
+                    산책
+                  </Text>
+                </Button>
               </Badge>
               <Badge
-                style={styles.badge}
+                style={[
+                  styles.badge,
+                  {
+                    color: `${unit === 8 ? '#7371FF' : '#DBDBDB'}`,
+                    borderColor: `${unit === 8 ? '#7371FF' : '#DBDBDB'}`,
+                  },
+                ]}
                 alignSelf="center"
                 varient={'outline'}
               >
-                <Text style={styles.badgeText}>스터디</Text>
+                <Button
+                  onPress={() => setUnit(8)}
+                  style={{
+                    backgroundColor: 'transparent',
+                    height: 23,
+                    width: 50,
+                    paddingLeft: 0,
+                    paddingRight: 0,
+                    paddingTop: 0,
+                    paddingBottom: 0,
+                    marginTop: 0,
+                  }}
+                >
+                  <Text
+                    style={[
+                      styles.badgeText,
+                      { color: `${unit === 8 ? '#7371FF' : '#DBDBDB'}` },
+                    ]}
+                  >
+                    스터디
+                  </Text>
+                </Button>
               </Badge>
               <Badge
-                style={styles.badge}
+                style={[
+                  styles.badge,
+                  {
+                    color: `${unit === 9 ? '#7371FF' : '#DBDBDB'}`,
+                    borderColor: `${unit === 9 ? '#7371FF' : '#DBDBDB'}`,
+                  },
+                ]}
                 alignSelf="center"
                 varient={'outline'}
               >
-                <Text style={styles.badgeText}>기타만남</Text>
+                <Button
+                  onPress={() => setUnit(9)}
+                  style={{
+                    backgroundColor: 'transparent',
+                    height: 23,
+                    width: 60,
+                    paddingLeft: 0,
+                    paddingRight: 0,
+                    paddingTop: 0,
+                    paddingBottom: 0,
+                    marginTop: 0,
+                  }}
+                >
+                  <Text
+                    style={[
+                      styles.badgeText,
+                      {
+                        color: `${unit === 9 ? '#7371FF' : '#DBDBDB'}`,
+                      },
+                    ]}
+                  >
+                    기타만남
+                  </Text>
+                </Button>
               </Badge>
             </HStack>
           </FormControl>
@@ -293,6 +562,8 @@ export default function CreateBubbleScreen() {
                 md: '25%',
               }}
               style={{ borderColor: '#DBDBDB', borderRadius: 12, fontSize: 14 }}
+              onChangeText={(value) => setContent({ ...content, name: value })}
+              value={content}
             />
             {'name' in errors ? (
               <FormControl.ErrorMessage
@@ -357,8 +628,8 @@ const styles = StyleSheet.create({
   },
   badge: {
     backgroundColor: 'white',
-    borderColor: '#7371FF',
-    color: '#7371FF',
+    // borderColor: '#7371FF',
+    // color: '#7371FF',
     fontFamily: 'Noto Sans KR',
     borderRadius: 18,
     paddingLeft: 15,
