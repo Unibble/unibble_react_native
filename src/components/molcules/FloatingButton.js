@@ -1,9 +1,8 @@
 import React from 'react';
-import { Fab, Box, Center, NativeBaseProvider } from 'native-base';
+import { Fab, Box, NativeBaseProvider } from 'native-base';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { useNavigation } from '@react-navigation/native';
 
-// import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 export const FloatingButton = () => {
   const navigation = useNavigation();
   return (
@@ -24,9 +23,7 @@ export const FloatingButton = () => {
 export default () => {
   return (
     <NativeBaseProvider>
-      {/* <Center flex={2} px="3"> */}
       <FloatingButton />
-      {/* </Center> */}
     </NativeBaseProvider>
   );
 };

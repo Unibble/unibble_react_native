@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   VStack,
   HStack,
@@ -6,15 +6,10 @@ import {
   IconButton,
   Text,
   NativeBaseProvider,
-  Center,
-  Image,
   Box,
   StatusBar,
-  Stack,
-  ScrollView,
-  Heading,
 } from 'native-base';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import styled from 'styled-components/native';
@@ -93,7 +88,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   button: {
-    // backgroundColor: 'green',
     alignItems: 'center',
     justifyContent: 'center',
     width: 54,
@@ -105,7 +99,6 @@ const styles = StyleSheet.create({
     shadowOffset: { height: 2, width: 2 },
     shadowRadius: 2,
     marginRight: 16,
-    // margin
 
     ...Platform.select({
       ios: {
@@ -129,17 +122,3 @@ const styles = StyleSheet.create({
     marginLeft: -10,
   },
 });
-
-const SortingButton = styled(Button)`
-  align-items: center;
-  justify-content: center;
-  width: 70px;
-  height: 70px;
-  margin-bottom: 30px;
-  border-radius: 35px;
-  margin-right: 10px;
-  shadowColor: rgba(0, 0, 0, 0.06);
-  shadowOpacity: 1;
-  shadowOffset: { height: 5 width: 2 };
-  shadowRadius: 2px;
-`;

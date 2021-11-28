@@ -1,30 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
-import NewProfileImage from 'assets/images/newProfileImage.png';
 import ProfileTabStatusBar from 'components/molcules/ProfileTabStatusBar';
-import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 
 import {
   VStack,
   HStack,
   Button,
-  IconButton,
   Text,
   Badge,
   NativeBaseProvider,
-  Center,
-  Image,
   Box,
-  StatusBar,
-  Stack,
-  ScrollView,
-  Heading,
   Avatar,
   FlatList,
   Spacer,
 } from 'native-base';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default function ProfileLikeBubbleScreen({ route }) {
   const title = route.params.title;
@@ -56,15 +46,17 @@ export default function ProfileLikeBubbleScreen({ route }) {
         'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
     },
   ];
+
   useEffect(() => {
     axios({
       method: 'GET',
       url: 'http://127.0.0.1:8000/user/get_zzim_bubble/',
       headers: {
-        Authorization: 'token d72545e327359bc0c4a6ddc06ab23a30de164fe1',
+        Authorization: 'token 274bf85fe885ed2556f0d05e1ead922d71fcf7fc',
       },
     }).then((response) => setLikes(response.data));
   }, [likes]);
+
   return (
     <NativeBaseProvider>
       <ProfileTabStatusBar />
@@ -89,7 +81,7 @@ export default function ProfileLikeBubbleScreen({ route }) {
               data={likes}
               style={{ overflow: 'hidden', zIndex: 7 }}
               showsVerticalScrollIndicator={false}
-              renderItem={({ item }) => (
+              renderItem={({ item, key }) => (
                 <Box
                   borderBottomWidth="1"
                   backgroundColor="#ffffff"
@@ -146,7 +138,7 @@ export default function ProfileLikeBubbleScreen({ route }) {
                           varient={'outline'}
                         >
                           <Text style={{ color: '#7371FF', fontSize: 12 }}>
-                            {item.unit}
+                            {unitsTable[item.unit - 1]}
                           </Text>
                         </Badge>
                         <Text
@@ -212,47 +204,6 @@ export default function ProfileLikeBubbleScreen({ route }) {
                           {item.guestNum}/{item.guestMax}명
                         </Text>
                       </Badge>
-                      {/* {`${compareDate(item.deadline)}` <
-                      `${today.getTime()}` ? (
-                        <Button
-                          onPress={() => navigations.navigate('DETAIL_BUBBLE')}
-                          style={{ backgroundColor: 'transparent' }}
-                        >
-                          <Badge
-                            alignSelf="center"
-                            varient={'outline'}
-                            opacity={
-                              `${compareDate(item.deadline)}` >
-                              `${today.getTime()}`
-                                ? 0.2
-                                : 1
-                            }
-                            style={{
-                              marginTop: 40,
-                              backgroundColor: `${
-                                item.status === '참여하기' ? '#323232' : 'white'
-                              }`,
-                              borderColor: `${
-                                item.status === '참여하기' ? 'white' : '#323232'
-                              }`,
-                              borderRadius: 18,
-                            }}
-                          >
-                            <Text
-                              style={{
-                                color: `${
-                                  item.status === '참여하기'
-                                    ? 'white'
-                                    : '#323232'
-                                }`,
-                                fontSize: 12,
-                              }}
-                            >
-                              모집마감
-                            </Text>
-                          </Badge>
-                        </Button>
-                      ) : ( */}
                       <Button
                         onPress={() => {
                           navigations.navigate('DETAIL_BUBBLE', {
@@ -293,7 +244,6 @@ export default function ProfileLikeBubbleScreen({ route }) {
                           </Text>
                         </Badge>
                       </Button>
-                      {/* )} */}
                     </VStack>
                   </HStack>
                 </Box>
@@ -301,7 +251,6 @@ export default function ProfileLikeBubbleScreen({ route }) {
               keyExtractor={(item) => item.bubbleId}
             />
           </VStack>
-          {/* </Center> */}
         </View>
       </Box>
     </NativeBaseProvider>

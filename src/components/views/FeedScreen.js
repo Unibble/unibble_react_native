@@ -1,11 +1,6 @@
-//MainScreen.js
 import React, { Component, useEffect, useState } from 'react';
 import { StyleSheet, SafeAreaView } from 'react-native';
-// import Text from 'components/common/Text';
-// import Card from 'components/molcules/Card';
-import profileImage from 'assets/images/profileImage.png';
 import AppBar from 'components/molcules/Appbar.js';
-import Icon from 'react-native-vector-icons/Ionicons';
 import FloatingButton from 'components/molcules/FloatingButton.js';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
@@ -13,7 +8,6 @@ import axios from 'axios';
 import {
   NativeBaseProvider,
   Box,
-  Heading,
   FlatList,
   HStack,
   Avatar,
@@ -25,7 +19,6 @@ import {
   Badge,
   View,
 } from 'native-base';
-import { convertAbsoluteToRem } from 'native-base/lib/typescript/theme/tools';
 
 function FeedScreen({ navigation }) {
   const navigations = useNavigation();
@@ -148,12 +141,10 @@ function FeedScreen({ navigation }) {
   };
 
   const compareDate = (datetime) => {
-    // console.log(datetime);
     let dateParsingData = datetime.split('-');
     let date = new Date(
       `${dateParsingData[0]}-${dateParsingData[1]}-${dateParsingData[2]}`,
     );
-    // console.log(date);
     return date.getTime();
   };
 
@@ -162,7 +153,7 @@ function FeedScreen({ navigation }) {
       method: 'POST',
       url: `http://127.0.0.1:8000/bubble/participate_bubble/${bubbleId}/`,
       headers: {
-        Authorization: 'token d72545e327359bc0c4a6ddc06ab23a30de164fe1',
+        Authorization: 'token 274bf85fe885ed2556f0d05e1ead922d71fcf7fc',
       },
     }).then((response) => console.log('api'));
   };
@@ -172,18 +163,17 @@ function FeedScreen({ navigation }) {
       method: 'GET',
       url: 'http://127.0.0.1:8000/bubble/get_feed_bubble/',
       headers: {
-        Authorization: 'token d72545e327359bc0c4a6ddc06ab23a30de164fe1',
+        Authorization: 'token 274bf85fe885ed2556f0d05e1ead922d71fcf7fc',
       },
     }).then((response) => setBubbles(response.data));
   }, [bubbles]);
-  // console.log(bubbles);
 
   useEffect(() => {
     axios({
       method: 'GET',
       url: 'http://127.0.0.1:8000/user/get_participate_bubble/',
       headers: {
-        Authorization: 'token d72545e327359bc0c4a6ddc06ab23a30de164fe1',
+        Authorization: 'token 274bf85fe885ed2556f0d05e1ead922d71fcf7fc',
       },
     }).then((response) => setParticipants(response.data));
   }, [participants]);
@@ -383,6 +373,7 @@ function FeedScreen({ navigation }) {
                                   hostNickname: `${item.host.nickName}`,
                                   bubbleContent: `${item.content}`,
                                   bubbleLocation: `${item.location}`,
+                                  bubbleAddress: `${item.address}`,
                                   hostUniv: `${item.host.univName}`,
                                   hostMajor: `${item.host.major}`,
                                   hostCampus: `${item.host.univCampus}`,
@@ -436,7 +427,6 @@ function FeedScreen({ navigation }) {
           </Box>
         </Center>
       </View>
-      <View></View>
     </>
   );
 }

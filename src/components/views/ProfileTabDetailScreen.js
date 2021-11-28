@@ -1,29 +1,19 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import NewProfileImage from 'assets/images/newProfileImage.png';
 import ProfileTabStatusBar from 'components/molcules/ProfileTabStatusBar';
-import { useNavigation } from '@react-navigation/native';
 
 import {
   VStack,
   HStack,
   Button,
-  IconButton,
   Text,
   Badge,
   NativeBaseProvider,
-  Center,
-  Image,
   Box,
-  StatusBar,
-  Stack,
-  ScrollView,
-  Heading,
   Avatar,
   FlatList,
   Spacer,
 } from 'native-base';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default function ProfileScreen({ route }) {
   const title = route.params.title;
@@ -119,6 +109,7 @@ export default function ProfileScreen({ route }) {
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSr01zI37DYuR8bMV5exWQBSw28C1v_71CAh8d7GP1mplcmTgQA6Q66Oo--QedAN1B4E1k&usqp=CAU',
     },
   ];
+
   return (
     <NativeBaseProvider>
       <ProfileTabStatusBar />
@@ -298,7 +289,6 @@ export default function ProfileScreen({ route }) {
               keyExtractor={(item) => item.id}
             />
           </VStack>
-          {/* </Center> */}
         </View>
       </Box>
     </NativeBaseProvider>

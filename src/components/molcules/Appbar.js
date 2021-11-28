@@ -6,11 +6,9 @@ import {
   IconButton,
   Text,
   NativeBaseProvider,
-  Center,
   Image,
   Box,
   StatusBar,
-  Stack,
   ScrollView,
   Heading,
 } from 'native-base';
@@ -24,6 +22,8 @@ import GameImage from 'assets/images/gameImage.png';
 import { useNavigation } from '@react-navigation/native';
 import styled from 'styled-components/native';
 import axios from 'axios';
+import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import token from 'config/key';
 
 function AppBar(props) {
   const navigation = useNavigation();
@@ -45,22 +45,25 @@ function AppBar(props) {
   const BeerCategoryButtonClick = () => {
     setIsBeerCategory(!isBeerCategory);
   };
+
   const StudyCategoryButtonClick = () => {
     setIsStudyCategory(!isStudyCategory);
   };
+
   const GameCategoryButtonClick = () => {
     setIsGameCategory(!isGameCategory);
   };
+
   useEffect(() => {
     axios({
       method: 'GET',
       url: 'http://127.0.0.1:8000/user/get_unibber/',
       headers: {
-        Authorization: 'token 508f7da65e78e5a65e076109fe987f18e245b18e',
+        Authorization: token,
       },
     }).then((response) => setUser(response.data));
   }, []);
-  // console.log('user: ', user);
+
   return (
     <>
       <StatusBar backgroundColor="#3700B3" barStyle="light-content" />
@@ -129,7 +132,9 @@ function AppBar(props) {
                     },
                   ]}
                   title=""
-                ></Button>
+                >
+                  <MaterialIcon name="cards-diamond" size={20} color="white" />
+                </Button>
                 <Text style={styles.text}>전체</Text>
               </View>
               <View style={styles.viewStyle2}>
@@ -199,22 +204,6 @@ function AppBar(props) {
                   <Image size={34} source={GameImage} alt="game-image" />
                 </Button>
                 <Text style={styles.text}>게임</Text>
-              </View>
-              <View style={styles.viewStyle3}>
-                <Button
-                  onPress={RiceCategoryButtonClick}
-                  style={[
-                    styles.button,
-                    {
-                      backgroundColor: `${
-                        isRiceCategory ? '#B66DFF' : 'white'
-                      }`,
-                    },
-                  ]}
-                  title=""
-                >
-                  <Image size={34} source={RiceImage} alt="rice-image" />
-                </Button>
               </View>
             </ScrollView>
           </HStack>

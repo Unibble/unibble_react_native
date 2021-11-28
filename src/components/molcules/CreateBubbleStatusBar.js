@@ -9,13 +9,17 @@ import {
   Box,
   StatusBar,
 } from 'native-base';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+
 import { useNavigation } from '@react-navigation/native';
 import styled from 'styled-components/native';
+import axios from 'axios';
+import token from 'config/key';
 
 export default function BubbleDetailStatusBar(props) {
   const navigation = useNavigation();
+  const [like, setLike] = useState(false);
 
   return (
     <NativeBaseProvider>
@@ -32,7 +36,7 @@ export default function BubbleDetailStatusBar(props) {
                     size={20}
                     color="#4A4A4A"
                     onPress={() => {
-                      navigation.navigate('PROFILE');
+                      navigation.navigate('MAIN');
                     }}
                   />
                 }
@@ -44,19 +48,28 @@ export default function BubbleDetailStatusBar(props) {
                 fontWeight="bold"
                 style={styles.profileName}
               ></Text>
-              <IconButton
-                icon={
-                  <Icon
-                    name="ios-settings-sharp"
-                    size={20}
-                    color="#4A4A4A"
-                    onPress={() => {
-                      navigation.navigate('DETAIL');
-                    }}
-                  />
+
+              <Button
+                onPress={() =>
+                  navigation.navigate('CREATE_BUBBLE', {
+                    placeName: `${props.placeName}`,
+                    placeAddress: `${props.placeInfo.placeAddress}`,
+                  })
                 }
-                style={styles.backButton}
-              />
+                style={{ backgroundColor: '#7371FF', borderRadius: 20 }}
+              >
+                <Text
+                  style={{
+                    color: 'white',
+                    fontSize: 16,
+                    lineHeight: 24,
+                    paddingLeft: 5,
+                    paddingRight: 5,
+                  }}
+                >
+                  선택
+                </Text>
+              </Button>
             </HStack>
           </VStack>
         </HStack>
@@ -72,9 +85,14 @@ const styles = StyleSheet.create({
   },
 
   profileName: {
-    width: 300,
+    width: 270,
   },
   icon: {
+    textAlign: 'right',
+    // backgroundColor: '#F0F1F5',
+    borderRadius: 50,
+  },
+  defaultButton: {
     textAlign: 'right',
   },
   backButton: {
@@ -88,6 +106,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   button: {
+    // backgroundColor: 'green',
     alignItems: 'center',
     justifyContent: 'center',
     width: 54,
@@ -99,6 +118,7 @@ const styles = StyleSheet.create({
     shadowOffset: { height: 2, width: 2 },
     shadowRadius: 2,
     marginRight: 16,
+    // margin
 
     ...Platform.select({
       ios: {
@@ -122,3 +142,17 @@ const styles = StyleSheet.create({
     marginLeft: -10,
   },
 });
+
+const SortingButton = styled(Button)`
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+  height: 70px;
+  margin-bottom: 30px;
+  border-radius: 35px;
+  margin-right: 10px;
+  shadowColor: rgba(0, 0, 0, 0.06);
+  shadowOpacity: 1;
+  shadowOffset: { height: 5 width: 2 };
+  shadowRadius: 2px;
+`;

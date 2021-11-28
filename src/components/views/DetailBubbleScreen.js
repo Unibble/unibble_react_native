@@ -3,7 +3,6 @@ import BubbleDetailStatusBar from 'components/molcules/BubbleDetailStatusBar';
 import {
   VStack,
   HStack,
-  Button,
   IconButton,
   Text,
   NativeBaseProvider,
@@ -11,7 +10,6 @@ import {
   Box,
   Image,
   Badge,
-  StatusBar,
   Stack,
   Input,
 } from 'native-base';
@@ -22,17 +20,14 @@ import ProfileImage from 'assets/images/profileImage.png';
 import PlaceImage from 'assets/images/placeImage.png';
 import NewProfileImage from 'assets/images/newProfile.png';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import axios from 'axios';
 
 export default function DetailBubbleScreen({ route }) {
-  const [bubble, setBubble] = useState({});
   const item = {
     status: '참여완료',
     participants: '2/5',
   };
   let bubbleData = route.params;
 
-  console.log(bubble);
   return (
     <NativeBaseProvider>
       <BubbleDetailStatusBar bubbleId={bubbleData.bubbleId} />
@@ -152,7 +147,7 @@ export default function DetailBubbleScreen({ route }) {
                   <Text
                     style={{ fontSize: 12, lineHeight: 18, fontWeight: '400' }}
                   >
-                    서울 광진구 능동로 103 (화양동)
+                    {bubbleData.bubbleAddress}
                   </Text>
                 </HStack>
               </VStack>

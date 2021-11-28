@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
-import NewProfileImage from 'assets/images/newProfileImage.png';
 import ProfileTabStatusBar from 'components/molcules/ProfileTabStatusBar';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
@@ -9,38 +8,21 @@ import {
   VStack,
   HStack,
   Button,
-  IconButton,
   Text,
   Badge,
   NativeBaseProvider,
-  Center,
-  Image,
   Box,
-  StatusBar,
-  Stack,
-  ScrollView,
-  Heading,
   Avatar,
   FlatList,
   Spacer,
 } from 'native-base';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default function ProfileScreen({ route }) {
+  const navigation = useNavigation();
   const title = route.params.title;
   const [participants, setParticipants] = useState([]);
   let today = new Date();
-  const unitsTable = [
-    '밥',
-    '술',
-    '운동',
-    '미팅',
-    '게임',
-    '영화',
-    '산책',
-    '스터디',
-    '기타만남',
-  ];
+
   const data = [
     {
       id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
@@ -56,15 +38,17 @@ export default function ProfileScreen({ route }) {
         'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
     },
   ];
+
   useEffect(() => {
     axios({
       method: 'GET',
       url: 'http://127.0.0.1:8000/user/get_participate_bubble/',
       headers: {
-        Authorization: 'token d72545e327359bc0c4a6ddc06ab23a30de164fe1',
+        Authorization: 'token 274bf85fe885ed2556f0d05e1ead922d71fcf7fc',
       },
     }).then((response) => setParticipants(response.data));
   }, [participants]);
+
   return (
     <NativeBaseProvider>
       <ProfileTabStatusBar />
@@ -212,50 +196,9 @@ export default function ProfileScreen({ route }) {
                           {item.guestNum}/{item.guestMax}명
                         </Text>
                       </Badge>
-                      {/* {`${compareDate(item.deadline)}` <
-                      `${today.getTime()}` ? (
-                        <Button
-                          onPress={() => navigations.navigate('DETAIL_BUBBLE')}
-                          style={{ backgroundColor: 'transparent' }}
-                        >
-                          <Badge
-                            alignSelf="center"
-                            varient={'outline'}
-                            opacity={
-                              `${compareDate(item.deadline)}` >
-                              `${today.getTime()}`
-                                ? 0.2
-                                : 1
-                            }
-                            style={{
-                              marginTop: 40,
-                              backgroundColor: `${
-                                item.status === '참여하기' ? '#323232' : 'white'
-                              }`,
-                              borderColor: `${
-                                item.status === '참여하기' ? 'white' : '#323232'
-                              }`,
-                              borderRadius: 18,
-                            }}
-                          >
-                            <Text
-                              style={{
-                                color: `${
-                                  item.status === '참여하기'
-                                    ? 'white'
-                                    : '#323232'
-                                }`,
-                                fontSize: 12,
-                              }}
-                            >
-                              모집마감
-                            </Text>
-                          </Badge>
-                        </Button>
-                      ) : ( */}
                       <Button
                         onPress={() => {
-                          navigations.navigate('DETAIL_BUBBLE', {
+                          navigation.navigate('DETAIL_BUBBLE', {
                             bubbleId: `${item.bubbleId}`,
                             bubbleDeadline: `${item.deadline}`,
                             bubbleTitle: `${item.title}`,
@@ -301,7 +244,6 @@ export default function ProfileScreen({ route }) {
               keyExtractor={(item) => item.bubbleId}
             />
           </VStack>
-          {/* </Center> */}
         </View>
       </Box>
     </NativeBaseProvider>

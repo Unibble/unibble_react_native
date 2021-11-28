@@ -6,7 +6,6 @@ import {
   Input,
   NativeBaseProvider,
   Center,
-  Container,
   Badge,
   HStack,
   TextArea,
@@ -18,10 +17,11 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import format from 'utils/datetime';
 import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
 
-export default function CreateBubbleScreen() {
+export default function CreateBubbleScreen({ route }) {
+  const navigation = useNavigation();
   const [bubbleName, setBubbleName] = React.useState({});
   const [errors, setErrors] = React.useState({});
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -62,7 +62,6 @@ export default function CreateBubbleScreen() {
     hideDatePicker();
     setDatetime(date.format('yyyy-MM-dd HH:mm:ss'));
   };
-  console.log(datetime);
 
   const onSubmit = () => {
     validate() ? console.log('Submitted') : console.log('Validation Failed');
@@ -72,8 +71,8 @@ export default function CreateBubbleScreen() {
       data: {
         title: bubbleName.name,
         time2meet: datetime,
-        location: bubbleLocation.name,
-        address: '',
+        location: `${route !== undefined ? route.params.placeName : ''}`,
+        address: `${route !== undefined ? route.params.placeAddress : ''}`,
         lat: '1',
         lon: '1',
         guest_max: bubbleGuests['value'],
@@ -81,16 +80,16 @@ export default function CreateBubbleScreen() {
         content: content.name,
       },
       headers: {
-        Authorization: 'token 508f7da65e78e5a65e076109fe987f18e245b18e',
+        Authorization: 'token 274bf85fe885ed2556f0d05e1ead922d71fcf7fc',
       },
     }).then((response) =>
       axios({
         method: 'POST',
         url: `http://127.0.0.1:8000/bubble/participate_bubble/${response.data.id}/`,
         headers: {
-          Authorization: 'token 508f7da65e78e5a65e076109fe987f18e245b18e',
+          Authorization: 'token 274bf85fe885ed2556f0d05e1ead922d71fcf7fc',
         },
-      }),
+      }).then(() => navigation.navigate('MAIN')),
     );
   };
   return (
@@ -142,12 +141,8 @@ export default function CreateBubbleScreen() {
               <Input
                 pointerEvents="none"
                 placeholder="월, 일, 시간을 적어주세요"
-                // onChangeText={(value) =>
-                //   setBubbleName({ ...bubbleName, name: value })
-                // }
                 value={datetime}
                 editable={false}
-                // onPress={showDatePicker}
                 style={{
                   borderColor: '#DBDBDB',
                   borderRightColor: 'transparent',
@@ -164,9 +159,9 @@ export default function CreateBubbleScreen() {
                 Error
               </FormControl.ErrorMessage>
             ) : (
-              <FormControl.HelperText _text={{ fontSize: 'xs' }}>
-                {/* Name should contain atleast 3 character. */}
-              </FormControl.HelperText>
+              <FormControl.HelperText
+                _text={{ fontSize: 'xs' }}
+              ></FormControl.HelperText>
             )}
           </FormControl>
           <FormControl
@@ -176,20 +171,27 @@ export default function CreateBubbleScreen() {
             <FormControl.Label _text={{ bold: true }}>
               <Text style={styles.defaultText}>어디에서 만날 버블인가요?</Text>
             </FormControl.Label>
-            <Input
-              placeholder="장소를 입력해주세요"
-              onChangeText={(value) =>
-                setBubbleLocation({ ...bubbleLocation, name: value })
-              }
-              value={bubbleLocation}
-              style={{
-                borderColor: '#DBDBDB',
-                borderRightColor: 'transparent',
-                borderTopColor: 'transparent',
-                borderLeftColor: 'transparent',
-                fontSize: 16,
-              }}
-            />
+            <TouchableOpacity
+              onPress={() => navigation.navigate('SEARCH_PLACE')}
+            >
+              <Input
+                placeholder="장소를 입력해주세요"
+                pointerEvents="none"
+                editable={false}
+                value={`${
+                  route?.params?.placeName === undefined
+                    ? ''
+                    : route.params.placeName
+                }`}
+                style={{
+                  borderColor: '#DBDBDB',
+                  borderRightColor: 'transparent',
+                  borderTopColor: 'transparent',
+                  borderLeftColor: 'transparent',
+                  fontSize: 16,
+                }}
+              />
+            </TouchableOpacity>
             {'name' in errors ? (
               <FormControl.ErrorMessage
                 _text={{ fontSize: 'xs', color: 'error.500', fontWeight: 500 }}
@@ -197,9 +199,9 @@ export default function CreateBubbleScreen() {
                 Error
               </FormControl.ErrorMessage>
             ) : (
-              <FormControl.HelperText _text={{ fontSize: 'xs' }}>
-                {/* Name should contain atleast 3 character. */}
-              </FormControl.HelperText>
+              <FormControl.HelperText
+                _text={{ fontSize: 'xs' }}
+              ></FormControl.HelperText>
             )}
           </FormControl>
           <FormControl
@@ -213,7 +215,7 @@ export default function CreateBubbleScreen() {
               <Text style={styles.pointColor}>(최대 8명)</Text>
             </FormControl.Label>
             <Input
-              placeholder="최소인원, 최대인원을 적어주세요."
+              placeholder="최대인원을 적어주세요."
               onChangeText={(value) => setBubbleGuests({ value })}
               value={bubbleGuests}
               style={{
@@ -231,16 +233,15 @@ export default function CreateBubbleScreen() {
                 Error
               </FormControl.ErrorMessage>
             ) : (
-              <FormControl.HelperText _text={{ fontSize: 'xs' }}>
-                {/* Name should contain atleast 3 character. */}
-              </FormControl.HelperText>
+              <FormControl.HelperText
+                _text={{ fontSize: 'xs' }}
+              ></FormControl.HelperText>
             )}
           </FormControl>
           <FormControl style={{ marginBottom: 20 }}>
             <FormControl.Label _text={{ bold: true }}>
               <Text style={styles.defaultText}>관련 유닛을 선택해주세요.</Text>
             </FormControl.Label>
-            {/* <View>{menuList}</View> */}
             <HStack>
               <Badge
                 style={[
@@ -580,9 +581,9 @@ export default function CreateBubbleScreen() {
                 Error
               </FormControl.ErrorMessage>
             ) : (
-              <FormControl.HelperText _text={{ fontSize: 'xs' }}>
-                {/* Name should contain atleast 3 character. */}
-              </FormControl.HelperText>
+              <FormControl.HelperText
+                _text={{ fontSize: 'xs' }}
+              ></FormControl.HelperText>
             )}
           </FormControl>
           <Button
@@ -590,7 +591,7 @@ export default function CreateBubbleScreen() {
             mt="5"
             style={{
               borderColor: '#DBDBDB',
-              backgroundColor: 'transparent',
+              backgroundColor: '#7371FF',
               borderWidth: 1,
               borderRadius: 24,
             }}
@@ -609,16 +610,6 @@ export default function CreateBubbleScreen() {
   );
 }
 
-// export default function () {
-//   return (
-//     <NativeBaseProvider>
-//       <Center flex={2} style={{ backgroundColor: 'white' }}>
-//         <CreateBubbleScreen />
-//       </Center>
-//     </NativeBaseProvider>
-//   );
-// }
-
 const styles = StyleSheet.create({
   pointColor: {
     color: '#DBDBDB',
@@ -636,8 +627,6 @@ const styles = StyleSheet.create({
   },
   badge: {
     backgroundColor: 'white',
-    // borderColor: '#7371FF',
-    // color: '#7371FF',
     fontFamily: 'Noto Sans KR',
     borderRadius: 18,
     paddingLeft: 15,
@@ -659,10 +648,9 @@ const styles = StyleSheet.create({
     borderColor: '#DBDBDB',
   },
   unSubmitText: {
-    color: '#DBDBDB',
+    color: 'white',
+    backgroundColor: '#7371FF',
     fontSize: 16,
     lineHeight: 24,
-    // paddingTop: 6,
-    // paddingBottom: 6,
   },
 });

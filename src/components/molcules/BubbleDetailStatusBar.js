@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   VStack,
   HStack,
@@ -6,25 +6,17 @@ import {
   IconButton,
   Text,
   NativeBaseProvider,
-  Center,
-  Image,
   Box,
   StatusBar,
-  Stack,
-  ScrollView,
-  Heading,
 } from 'native-base';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import FeatherIcon from 'react-native-vector-icons/Feather';
-import ProfileImage from 'assets/images/profileImage.png';
-import RiceImage from 'assets/images/riceImage.png';
-import StudyImage from 'assets/images/studyImage.png';
-import BeerImage from 'assets/images/beerImage.png';
-import GameImage from 'assets/images/gameImage.png';
+
 import { useNavigation } from '@react-navigation/native';
 import styled from 'styled-components/native';
 import axios from 'axios';
+import token from 'config/key';
 
 export default function BubbleDetailStatusBar(props) {
   const navigation = useNavigation();
@@ -36,7 +28,7 @@ export default function BubbleDetailStatusBar(props) {
       method: 'POST',
       url: `http://127.0.0.1:8000/bubble/zzim_bubble/${props.bubbleId}/`,
       headers: {
-        Authorization: 'token d72545e327359bc0c4a6ddc06ab23a30de164fe1',
+        Authorization: token,
       },
     }).then((response) => setLike(!like));
   };
