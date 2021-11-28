@@ -16,6 +16,7 @@ import {
   Box,
 } from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import token from 'config/key';
 
 export default function ProfileParticipateBubbleScreen() {
   const navigation = useNavigation();
@@ -26,7 +27,7 @@ export default function ProfileParticipateBubbleScreen() {
       method: 'GET',
       url: 'http://127.0.0.1:8000/user/get_unibber/',
       headers: {
-        Authorization: 'token 274bf85fe885ed2556f0d05e1ead922d71fcf7fc',
+        Authorization: token,
       },
     }).then((response) => setUser(response.data));
   }, []);

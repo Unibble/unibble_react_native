@@ -15,6 +15,7 @@ import {
   FlatList,
   Spacer,
 } from 'native-base';
+import token from 'config/key';
 
 export default function ProfileLikeBubbleScreen({ route }) {
   const title = route.params.title;
@@ -52,7 +53,7 @@ export default function ProfileLikeBubbleScreen({ route }) {
       method: 'GET',
       url: 'http://127.0.0.1:8000/user/get_zzim_bubble/',
       headers: {
-        Authorization: 'token 274bf85fe885ed2556f0d05e1ead922d71fcf7fc',
+        Authorization: token,
       },
     }).then((response) => setLikes(response.data));
   }, [likes]);

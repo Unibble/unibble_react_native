@@ -4,6 +4,7 @@ import AppBar from 'components/molcules/Appbar.js';
 import FloatingButton from 'components/molcules/FloatingButton.js';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
+import token from 'config/key';
 
 import {
   NativeBaseProvider,
@@ -153,7 +154,7 @@ function FeedScreen({ navigation }) {
       method: 'POST',
       url: `http://127.0.0.1:8000/bubble/participate_bubble/${bubbleId}/`,
       headers: {
-        Authorization: 'token 274bf85fe885ed2556f0d05e1ead922d71fcf7fc',
+        Authorization: token,
       },
     }).then((response) => console.log('api'));
   };
@@ -163,7 +164,7 @@ function FeedScreen({ navigation }) {
       method: 'GET',
       url: 'http://127.0.0.1:8000/bubble/get_feed_bubble/',
       headers: {
-        Authorization: 'token 274bf85fe885ed2556f0d05e1ead922d71fcf7fc',
+        Authorization: token,
       },
     }).then((response) => setBubbles(response.data));
   }, [bubbles]);
@@ -173,7 +174,7 @@ function FeedScreen({ navigation }) {
       method: 'GET',
       url: 'http://127.0.0.1:8000/user/get_participate_bubble/',
       headers: {
-        Authorization: 'token 274bf85fe885ed2556f0d05e1ead922d71fcf7fc',
+        Authorization: token,
       },
     }).then((response) => setParticipants(response.data));
   }, [participants]);

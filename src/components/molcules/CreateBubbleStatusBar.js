@@ -14,8 +14,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import { useNavigation } from '@react-navigation/native';
 import styled from 'styled-components/native';
-import axios from 'axios';
-import token from 'config/key';
 
 export default function BubbleDetailStatusBar(props) {
   const navigation = useNavigation();

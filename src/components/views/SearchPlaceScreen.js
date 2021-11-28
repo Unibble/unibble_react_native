@@ -15,6 +15,7 @@ import FeatherIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { SafeAreaView, StyleSheet } from 'react-native';
 import CreateBubbleStatusBar from 'components/molcules/CreateBubbleStatusBar';
+import kakaoSecretKey from 'config/key';
 
 import axios from 'axios';
 
@@ -28,7 +29,7 @@ export default function DetailBubbleScreen({ route }) {
       method: 'POST',
       url: `https://dapi.kakao.com/v2/local/search/keyword.json?query=${place.name}`,
       headers: {
-        Authorization: 'KakaoAK c2c089315c04689df141ea47a6c3f660',
+        Authorization: kakaoSecretKey,
       },
     }).then((response) => setPlaces(response.data.documents));
   }, [places]);

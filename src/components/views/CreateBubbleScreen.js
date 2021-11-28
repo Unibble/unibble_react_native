@@ -19,6 +19,7 @@ import {
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
+import token from 'config/key';
 
 export default function CreateBubbleScreen({ route }) {
   const navigation = useNavigation();
@@ -80,7 +81,7 @@ export default function CreateBubbleScreen({ route }) {
         content: content.name,
       },
       headers: {
-        Authorization: 'token 274bf85fe885ed2556f0d05e1ead922d71fcf7fc',
+        Authorization: token,
       },
     }).then((response) =>
       axios({
